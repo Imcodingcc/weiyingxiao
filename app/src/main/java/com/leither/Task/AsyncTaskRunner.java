@@ -2,7 +2,7 @@ package com.leither.Task;
 
 import android.annotation.SuppressLint;
 
-import com.leither.scripts.Script;
+import com.leither.scripts.AsyncScript;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +10,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 @SuppressLint("UseSparseArrays")
-public class TaskRunner extends Thread{
-    private BlockingQueue<Task> queue = new LinkedBlockingDeque<>(10);
+public class AsyncTaskRunner extends Thread{
+    public BlockingQueue<Task> queue = new LinkedBlockingDeque<>(10);
     private Map<Long, Task> waitMap = new HashMap<>();
     private Map<Long, Task> pausedMap= new HashMap<>();
 
@@ -21,9 +21,9 @@ public class TaskRunner extends Thread{
             try {
                 Task task = queue.take();
                 long id = task.getId();
-                Script script = task.getScript();
-                script.start();
-                script.onComplete();
+                AsyncScript asyncScript = task.getAsyncScript();
+                asyncScript.start();
+                asyncScript.onComplete();
                 waitMap.remove(id);
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -12,9 +12,10 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import com.leither.share.Global;
 import com.leither.exception.NodeNullException;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Operation {
+public class BasicAction {
     @SuppressLint("StaticFieldLeak")
     private static AccessibilityService accessibilityService = Global.getDefault().getAccessibilityService();
     public static void Click(String name) throws NodeNullException {
@@ -24,7 +25,7 @@ public class Operation {
         if(list.size() == 0){
            throw new NodeNullException(name + " node not found");
         }
-        clickAble = list.get(list.size() - 1);
+        clickAble = list.get(0);
         while(clickAble != null){
             if(clickAble.isClickable()){
                 clickAble.performAction(AccessibilityNodeInfo.ACTION_CLICK);
@@ -33,6 +34,44 @@ public class Operation {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+            clickAble = clickAble.getParent();
+        }
+    }
+
+    public static void ClickById(String id) throws NodeNullException {
+        AccessibilityNodeInfo clickAble = accessibilityService.getRootInActiveWindow();
+        List<AccessibilityNodeInfo> list = clickAble
+                .findAccessibilityNodeInfosByViewId(id);
+        if(list.size() == 0){
+            throw new NodeNullException(id + " node not found");
+        }
+        clickAble = list.get(0);
+        while(clickAble != null){
+            if(clickAble.isClickable()){
+                clickAble.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            clickAble = clickAble.getParent();
+        }
+    }
+
+    public static void DoubleClickById(String id) throws NodeNullException {
+        AccessibilityNodeInfo clickAble = accessibilityService.getRootInActiveWindow();
+        List<AccessibilityNodeInfo> list = clickAble
+                .findAccessibilityNodeInfosByViewId(id);
+        if(list.size() == 0){
+            throw new NodeNullException(id + " node not found");
+        }
+        clickAble = list.get(0);
+        while(clickAble != null){
+            if(clickAble.isClickable()){
+                clickAble.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                clickAble.performAction(AccessibilityNodeInfo.ACTION_CLICK);
             }
             clickAble = clickAble.getParent();
         }
@@ -64,6 +103,17 @@ public class Operation {
         return false;
     }
 
+    public static void findByClassName(List<AccessibilityNodeInfo> nodeInfos, AccessibilityNodeInfo rootNode, String className){
+        int count = rootNode.getChildCount();
+        for(int i = 0; i<count; i++){
+            AccessibilityNodeInfo nodeInfo = rootNode.getChild(i);
+            if(className.equals(nodeInfo.getClassName())){
+                nodeInfos.add(nodeInfo);
+            }
+            findByClassName(nodeInfos, nodeInfo, className);
+        }
+    }
+
     public static void back(int times){
         for (int i = 0; i < times; i++) {
            accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
@@ -72,6 +122,17 @@ public class Operation {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public static void slide(int orientation) throws NodeNullException {
+        AccessibilityNodeInfo nodeInfo = accessibilityService.getRootInActiveWindow();
+        List<AccessibilityNodeInfo> nodeInfos = new ArrayList<>();
+        findByClassName(nodeInfos, nodeInfo, "android.widget.ListView");
+        if(nodeInfos.size() != 0){
+            nodeInfos.get(0).performAction(orientation);
+        }else{
+            throw new NodeNullException("ListView node not found");
         }
     }
 

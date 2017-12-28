@@ -4,9 +4,9 @@ import android.accessibilityservice.AccessibilityService;
 
 import com.leither.share.Global;
 import com.leither.exception.NodeNullException;
-import com.leither.operation.Operation;
+import com.leither.operation.BasicAction;
 
-public class Mass implements Script{
+public class Mass implements AsyncScript {
     private String[] step = new String[]{"我", "设置", "通用", "功能", "群发助手", "开始群发", "新建群发", "全选", "下一步"};
     private String[] step2 = new String[]{"发送", "设置", "清空此功能消息记录", "清空"};
     private String text;
@@ -18,21 +18,22 @@ public class Mass implements Script{
     }
 
     @Override
-    public void start() {
+    public String start() {
         try {
             for (String s : step) {
-                Operation.Click(s);
+                BasicAction.Click(s);
             }
-            Operation.input(text, accessibilityService.getRootInActiveWindow());
+            BasicAction.input(text, accessibilityService.getRootInActiveWindow());
             for (String s : step2) {
-                Operation.Click(s);
+                BasicAction.Click(s);
             }
-            Operation.back(2);
+            BasicAction.back(2);
         } catch (NodeNullException e) {
             e.printStackTrace();
-            Operation.back(10);
-            Operation.openWechat();
+            BasicAction.back(10);
+            BasicAction.openWechat();
         }
+        return null;
     }
 
     @Override

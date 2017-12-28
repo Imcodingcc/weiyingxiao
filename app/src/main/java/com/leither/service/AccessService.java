@@ -4,6 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.leither.share.Global;
@@ -26,6 +27,7 @@ public class AccessService extends AccessibilityService{
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        Log.d("AccessibilityEvent", String.valueOf(event.getEventType()));
     }
 
     @Override

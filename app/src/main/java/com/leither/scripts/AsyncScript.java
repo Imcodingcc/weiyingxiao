@@ -1,6 +1,6 @@
 package com.leither.scripts;
 
-public interface Script {
-    public void start();
+public interface AsyncScript {
+    public String start();
     public void onComplete();
 }

@@ -1,13 +1,13 @@
 package com.leither.Task;
 
-import com.leither.scripts.Script;
+import com.leither.scripts.AsyncScript;
 
 public class Task {
     private long id;
 
-    public Task(long id, Script script) {
+    public Task(long id, AsyncScript asyncScript) {
         this.id = id;
-        this.script = script;
+        this.asyncScript = asyncScript;
     }
 
     public long getId() {
@@ -18,13 +18,13 @@ public class Task {
         this.id = id;
     }
 
-    public Script getScript() {
-        return script;
+    public AsyncScript getAsyncScript() {
+        return asyncScript;
     }
 
-    public void setScript(Script script) {
-        this.script = script;
+    public void setAsyncScript(AsyncScript asyncScript) {
+        this.asyncScript = asyncScript;
     }
 
-    private Script script;
+    private AsyncScript asyncScript;
 }
