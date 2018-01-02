@@ -1,9 +1,8 @@
-package com.leither.scripts;
+package com.leither.scripts.asyncScripts;
 
 import android.accessibilityservice.AccessibilityService;
 
 import com.leither.share.Global;
-import com.leither.exception.NodeNullException;
 import com.leither.operation.BasicAction;
 
 public class Mass implements AsyncScript {
@@ -18,22 +17,16 @@ public class Mass implements AsyncScript {
     }
 
     @Override
-    public String start() {
-        try {
-            for (String s : step) {
-                BasicAction.Click(s);
-            }
-            BasicAction.input(text, accessibilityService.getRootInActiveWindow());
-            for (String s : step2) {
-                BasicAction.Click(s);
-            }
-            BasicAction.back(2);
-        } catch (NodeNullException e) {
-            e.printStackTrace();
-            BasicAction.back(10);
-            BasicAction.openWechat();
+    public String start() throws Exception{
+        BasicAction.reOpenWeChat();
+        for (String s : step) {
+            BasicAction.Click(s, 0);
         }
-        return null;
+        BasicAction.input(text, accessibilityService.getRootInActiveWindow());
+        for (String s : step2) {
+            BasicAction.Click(s, 0);
+        }
+        return "ok";
     }
 
     @Override

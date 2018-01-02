@@ -49,7 +49,7 @@ public class ScreenCaptureService extends Service
     private Surface encoderInputSurface = null;
     private VirtualDisplay mVirtualDisplay = null;
     private MediaProjection mMediaProjection = null;
-    SocketCreator socketCreator = SocketCreator.getDefault(null);
+    //SocketCreator socketCreator = SocketCreator.getDefault(null);
     public static MediaProjectionManager mediaProjectionManager = null;
 
     @Override

@@ -7,23 +7,28 @@ import java.util.concurrent.BlockingQueue;
 public class SocketCreator {
     private AsyncHttpServer server = new AsyncHttpServer();
     private static SocketCreator socketCreator = null;
-    private BlockingQueue<byte[]> dataList;
 
 
 
-    private SocketCreator(BlockingQueue<byte[]> dataList){
-        this.dataList = dataList;
+    private SocketCreator(){
         setListener();
     }
 
     private void setListener(){
-        new HttpServer().setListener(server);
-        new WebSocketServer(dataList).setListener(server);
         server.listen(5000);
     }
-    public static SocketCreator getDefault(BlockingQueue<byte[]> dataList){
+
+    public void setWsListener(BlockingQueue<byte[]> dataList){
+        new WebSocketServer(dataList).setListener(server);
+    }
+
+    public void setHttpListener(){
+        new HttpServer().setListener(server);
+    }
+
+    public static SocketCreator getDefault(){
         if(socketCreator == null){
-            socketCreator = new SocketCreator(dataList);
+            socketCreator = new SocketCreator();
         }
         return socketCreator;
     }

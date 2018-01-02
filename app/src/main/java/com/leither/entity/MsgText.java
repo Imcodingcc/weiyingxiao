@@ -1,4 +1,4 @@
-package com.leither.operation;
+package com.leither.entity;
 
 public class MsgText {
     private String type;

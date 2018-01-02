@@ -1,8 +1,4 @@
-package com.leither.operation;
-
-/**
- * Created by lvqiang on 17-12-26.
- */
+package com.leither.entity;
 
 public class MsgSummary {
     private String title;

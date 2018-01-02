@@ -6,10 +6,6 @@ import android.media.MediaFormat;
 
 import java.io.IOException;
 
-/**
- * Created by 90678 on 2017/8/1.
- */
-
 public class DeEncodecCommon {
 
     public static MediaFormat getFormat () {

@@ -1,8 +1,9 @@
-package com.leither.Task;
+package com.leither.Task.asyncTask;
 
 import android.annotation.SuppressLint;
 
-import com.leither.scripts.AsyncScript;
+import com.leither.operation.BasicAction;
+import com.leither.scripts.asyncScripts.AsyncScript;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,15 +18,22 @@ public class AsyncTaskRunner extends Thread{
 
     @Override
     public void run() {
-        while(true) {
+        while(true) {AsyncScript asyncScript = null;
             try {
                 Task task = queue.take();
                 long id = task.getId();
-                AsyncScript asyncScript = task.getAsyncScript();
+                asyncScript = task.getAsyncScript();
                 asyncScript.start();
                 asyncScript.onComplete();
                 waitMap.remove(id);
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
+                assert asyncScript != null;
+                asyncScript.onComplete();
+                try {
+                    BasicAction.reOpenWeChat();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
                 e.printStackTrace();
             }
         }

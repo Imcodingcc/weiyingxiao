@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.ImageFormat;
+import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
@@ -47,7 +49,7 @@ public class ScreenshotService extends Service
     public void onCreate()
     {
         super.onCreate();
-        SocketCreator.getDefault(jpgQueue);
+        SocketCreator.getDefault().setWsListener(jpgQueue);
         createSurface();
         startOnUIThread();
     }
@@ -63,7 +65,7 @@ public class ScreenshotService extends Service
         DisplayMetrics metrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(metrics);
         mScreenDensity = metrics.densityDpi;
-        mImageReader = ImageReader.newInstance(windowWidth/2, windowHeight/2, 0x1, 2);
+        mImageReader = ImageReader.newInstance(windowWidth/2, windowHeight/2, PixelFormat.RGBA_8888, 2);
         mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
             @Override
             public void onImageAvailable(ImageReader reader) {

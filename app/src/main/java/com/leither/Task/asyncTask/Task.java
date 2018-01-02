@@ -1,6 +1,6 @@
-package com.leither.Task;
+package com.leither.Task.asyncTask;
 
-import com.leither.scripts.AsyncScript;
+import com.leither.scripts.asyncScripts.AsyncScript;
 
 public class Task {
     private long id;

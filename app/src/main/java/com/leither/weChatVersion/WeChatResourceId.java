@@ -4,15 +4,18 @@ import android.util.Log;
 
 public class WeChatResourceId {
 
-    public String version;
-    private String weChat = "com.tencent.mm:id/";
-    public String weChat_conversation_title;
-    public String weChat_conversation_lastTime;
-    public String weChat_conversation_lastMsg;
-    public String weChat_conversation_msg_count;
-    public String weChat_conversation_content;
-    public String weChat_conversation_time;
-    public String weChat_conversation_text;
+    public String version;//微信版本号
+    private String weChat = "com.tencent.mm:id/";//公共字符串[不变]
+    public String weChat_conversation_title;//最近联系人列表名字[微信首页]
+    public String weChat_conversation_lastTime;//最近联系人列表时间[微信首页]
+    public String weChat_conversation_lastMsg;//最近联系人列表消息[微信首页]
+    public String weChat_conversation_msg_count;//最近联系人列表新消息数目[微信首页]
+    public String weChat_conversation_content;//聊天框内消息[微信->与xx聊天]
+    public String weChat_conversation_time;//聊天框内消息时间[微信->与xx聊天]
+    public String weChat_conversation_text;//聊天框内双击消息放大[微信->与xx聊天->双击某条消息]
+    public String weChat_account_id;//微信号[我->设置->帐号与安全]
+    public String weChat_main_tab;//底栏tab按钮[微信首页]
+    public String weChat_search_text_view;//右上角[+]号->添加朋友->输入框
     public WeChatResourceId(String version){
        this.version = version;
        version();
@@ -28,10 +31,12 @@ public class WeChatResourceId {
                 weChat_conversation_content = weChat + "j1";
                 weChat_conversation_time = weChat + "a2";
                 weChat_conversation_text= weChat + "af6";
+                weChat_account_id = "android:id/summary";
+                weChat_main_tab = weChat + "awt";
+                weChat_search_text_view = weChat + "hk";
                 break;
             default:
                 Log.d("WeChatResourceId", "unknown weChat version");
         }
-
     }
 }

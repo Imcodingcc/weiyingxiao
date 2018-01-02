@@ -1,12 +1,10 @@
-package com.leither.Task;
+package com.leither.Task.asyncTask;
 
 import android.util.Log;
 
-import com.leither.scripts.OpenConversation;
-import com.leither.scripts.RefreshConversations;
-import com.leither.scripts.Mass;
-import com.leither.scripts.AsyncScript;
-import com.leither.scripts.SendMsg;
+import com.leither.scripts.asyncScripts.AddOne;
+import com.leither.scripts.asyncScripts.Mass;
+import com.leither.scripts.asyncScripts.AsyncScript;
 
 import java.util.Date;
 
@@ -17,6 +15,10 @@ public class TaskFactory {
         switch (type){
             case "Mass":
                 asyncScript = new Mass(content);
+                task = new Task(new Date().getTime(), asyncScript);
+                break;
+            case "AddOne":
+                asyncScript = new AddOne(content);
                 task = new Task(new Date().getTime(), asyncScript);
                 break;
             default:

@@ -8,8 +8,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.dylan_wang.capturescreen.R;
+import com.leither.common.Tools;
+import com.leither.operation.RootedAction;
+import com.leither.share.Global;
 import com.leither.share.ShotApplication;
 import com.leither.service.AccessService;
 import com.leither.service.ScreenshotService;
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        preInit();
+        //if(!isPermission()) return;
         init();
     }
 
@@ -54,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    private void preInit(){
+        Global.getDefault().setRootedAction(new RootedAction());
+    }
     private void init(){
         getMediaProject();
         startService();
@@ -81,5 +90,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void starScreenshot(){
         startActivityForResult(mMediaProjectionManager.createScreenCaptureIntent(), REQUEST_MEDIA_PROJECTION);
+    }
+
+    boolean isPermission(){
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            Toast.makeText(this, "请在android5.0以上的手机运行", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!Tools.isAccessibilitySettingsOn(this)){
+            Toast.makeText(this, "请先打开辅助功能, 再重启app", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return Tools.isRoot();
     }
 }
