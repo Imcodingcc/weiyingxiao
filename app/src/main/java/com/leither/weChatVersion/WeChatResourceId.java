@@ -16,6 +16,10 @@ public class WeChatResourceId {
     public String weChat_account_id;//微信号[我->设置->帐号与安全]
     public String weChat_main_tab;//底栏tab按钮[微信首页]
     public String weChat_search_text_view;//右上角[+]号->添加朋友->输入框
+    public String weChat_main_list;//最近联系人列表
+    public String weChat_main_list_view;//最近联系人列表
+    public String weChat_main_tab_msg_count;//底栏tab按钮上的红点[微信首页]
+    public String weChat_title;//微信主页的[微信]title
     public WeChatResourceId(String version){
        this.version = version;
        version();
@@ -34,6 +38,10 @@ public class WeChatResourceId {
                 weChat_account_id = "android:id/summary";
                 weChat_main_tab = weChat + "awt";
                 weChat_search_text_view = weChat + "hk";
+                weChat_main_list = weChat + "aoh";
+                weChat_main_tab_msg_count = weChat + "c3d";
+                weChat_main_list_view = weChat + "bya";
+                weChat_title = "android:id/text1";
                 break;
             default:
                 Log.d("WeChatResourceId", "unknown weChat version");

@@ -13,15 +13,13 @@ public class MsgSummary {
                 "title='" + title + '\'' +
                 ", lasTime='" + lasTime + '\'' +
                 ", lastMsg='" + lastMsg + '\'' +
-                ", newMsgCount='" + newMsgCount + '\'' +
                 '}';
     }
 
-    public MsgSummary(String title, String lasTime, String lastMsg, String newMsgCount) {
+    public MsgSummary(String title, String lasTime, String lastMsg) {
         this.title = title;
         this.lasTime = lasTime;
         this.lastMsg = lastMsg;
-        this.newMsgCount = newMsgCount;
     }
 
     public void setTitle(String title) {
@@ -44,15 +42,6 @@ public class MsgSummary {
         this.lastMsg = lastMsg;
     }
 
-    public String getNewMsgCount() {
-        return newMsgCount;
-    }
-
-    public void setNewMsgCount(String newMsgCount) {
-        this.newMsgCount = newMsgCount;
-    }
-
     private String lasTime;
     private String lastMsg;
-    private String newMsgCount;
 }

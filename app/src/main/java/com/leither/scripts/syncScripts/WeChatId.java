@@ -15,10 +15,8 @@ import java.util.Map;
 
 public class WeChatId extends SyncScript{
     private String[] steps = new String[]{"我", "设置", "帐号与安全"};
-    public AsyncHttpServerResponse response;
     public WeChatId(AsyncHttpServerResponse response){
         super(response);
-        this.response = response;
     }
     @Override
     public String exec() throws Exception{
@@ -26,8 +24,15 @@ public class WeChatId extends SyncScript{
         for (String step : steps) {
             BasicAction.Click(step, 0);
         }
-        AccessibilityNodeInfo nodeInfo = Global.getDefault().getAccessibilityService().getRootInActiveWindow();
-        List<AccessibilityNodeInfo> idsInfo= nodeInfo.findAccessibilityNodeInfosByViewId(Global.getDefault().getWeChatResourceId().weChat_account_id);
+        AccessibilityNodeInfo nodeInfo = Global
+                .getDefault()
+                .getAccessibilityService()
+                .getRootInActiveWindow();
+        List<AccessibilityNodeInfo> idsInfo= nodeInfo
+                .findAccessibilityNodeInfosByViewId(Global
+                        .getDefault()
+                        .getWeChatResourceId()
+                        .weChat_account_id);
         Map<String, String> map = new HashMap<>();
         JSONObject jsonObject = null;
         if(idsInfo.size() >=4){
@@ -38,7 +43,8 @@ public class WeChatId extends SyncScript{
             jsonObject = new JSONObject(map);
         }
         if(jsonObject != null){
-            return returnValue(jsonObject);
+            Global.getDefault().setWeChatId(returnValue(jsonObject));
+            return "success";
         }
         throw new NodeNullException("node not found");
     }

@@ -100,32 +100,13 @@ public class BasicAction {
                 return true;
             }
             if(input(content, nodeInfo)){
-                Thread.sleep(1000);
+                Thread.sleep(500);
                return true;
             }
         }
         return false;
     }
 
-    private static void findByClassName(List<AccessibilityNodeInfo> nodeInfos, AccessibilityNodeInfo rootNode, String className){
-        int count = rootNode.getChildCount();
-        for(int i = 0; i<count; i++){
-            AccessibilityNodeInfo nodeInfo = rootNode.getChild(i);
-            if(nodeInfo != null){
-                if(className.equals(nodeInfo.getClassName())){
-                    nodeInfos.add(nodeInfo);
-                }
-                findByClassName(nodeInfos, nodeInfo, className);
-            }
-        }
-    }
-
-    public static void back(int times) throws InterruptedException {
-        for (int i = 0; i < times; i++) {
-           accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-           Thread.sleep(500);
-        }
-    }
 
     public static void slide(int orientation) throws NodeNullException {
         AccessibilityNodeInfo nodeInfo = accessibilityService.getRootInActiveWindow();
@@ -148,9 +129,28 @@ public class BasicAction {
         Thread.sleep(2000);
     }
 
+    public static void back(int times) throws InterruptedException {
+        for (int i = 0; i < times; i++) {
+            accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+            Thread.sleep(500);
+        }
+    }
 
     public static void reOpenWeChat() throws Exception{
         back(5);
         openWeChat();
+    }
+
+    private static void findByClassName(List<AccessibilityNodeInfo> nodeInfos, AccessibilityNodeInfo rootNode, String className){
+        int count = rootNode.getChildCount();
+        for(int i = 0; i<count; i++){
+            AccessibilityNodeInfo nodeInfo = rootNode.getChild(i);
+            if(nodeInfo != null){
+                if(className.equals(nodeInfo.getClassName())){
+                    nodeInfos.add(nodeInfo);
+                }
+                findByClassName(nodeInfos, nodeInfo, className);
+            }
+        }
     }
 }

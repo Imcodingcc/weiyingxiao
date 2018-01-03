@@ -1,6 +1,7 @@
 package com.leither.Task.syncTask;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.operation.BasicAction;
@@ -14,28 +15,18 @@ import java.util.concurrent.LinkedBlockingDeque;
 @SuppressLint("UseSparseArrays")
 public class SyncTaskRunner extends Thread{
     private BlockingQueue<SyncScript> queue = new LinkedBlockingDeque<>(60);
-    private List<AsyncHttpServerResponse> list = new ArrayList<>();
 
     @Override
     public void run() {
         while(true) {
-            SyncScript syncScript = null;
+            SyncScript syncScript;
             try {
                 syncScript = queue.take();
-                list.remove(syncScript.response);
-                if(null != syncScript.response){
-                    syncScript.response.send(syncScript.exec());
-                }else{
-                    syncScript.exec();
-                }
+                Log.d("TASK", "WORK");
+                syncScript.onComplete(syncScript.exec());
             } catch (Exception e) {
                 e.printStackTrace();
-                assert syncScript != null;
-                for (AsyncHttpServerResponse asyncHttpServerResponse : list) {
-                    asyncHttpServerResponse.send("{code: -1, msg: "+e.getMessage()+"}");
-                }
                 queue = new LinkedBlockingDeque<>(60);
-                list = new ArrayList<>();
                 try {
                     BasicAction.reOpenWeChat();
                 } catch (Exception e1) {
@@ -45,8 +36,7 @@ public class SyncTaskRunner extends Thread{
         }
     }
 
-    public void addScript(SyncScript syncScript){
+    public synchronized void addScript(SyncScript syncScript){
         queue.offer(syncScript);
-        list.add(syncScript.response);
     }
 }

@@ -6,12 +6,10 @@ import com.leither.share.Global;
 
 public class OpenConversation extends SyncScript{
 
-    String param;
-    public AsyncHttpServerResponse response;
+    private String param;
     public OpenConversation(AsyncHttpServerResponse response, String param){
         super(response);
         this.param = param;
-        this.response = response;
     }
 
     @Override

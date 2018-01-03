@@ -31,4 +31,11 @@ public class RootedAction {
         String action = "input tap " + left + " " + top + "\n";
         execCommand(action);
     }
+
+    public void longPress(Rect rect) throws IOException, InterruptedException {
+        int left = rect.left + 1;
+        int top = rect.top + 1;
+        String action = "input touchscreen swipe " + left + " " + top + " " + left + " " + top + " " + 1500 + "\n";
+        execCommand(action);
+    }
 }

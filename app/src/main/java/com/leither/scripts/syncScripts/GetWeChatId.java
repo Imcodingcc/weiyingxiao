@@ -8,17 +8,15 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-public class GetConversationList extends SyncScript{
+public class GetWeChatId extends SyncScript{
 
     public AsyncHttpServerResponse response;
-    public GetConversationList(AsyncHttpServerResponse response){
+    public GetWeChatId(AsyncHttpServerResponse response){
         super(response);
         this.response = response;
     }
     @Override
     public String exec() throws Exception{
-        Map<String, MsgSummary> msgSummaryMap = Global.getDefault().getConversationList();
-        JSONObject jsonObject = new JSONObject(msgSummaryMap);
-        return returnValue(jsonObject);
+        return Global.getDefault().getWeChatId();
     }
 }

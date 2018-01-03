@@ -118,7 +118,7 @@ public class ScreenshotService extends Service
             public void run() {
                 byte[] a = Tools.bitmapToByteArray(allBitmap);
                 if(!jpgQueue.offer(a)){
-                    Log.d("drop", "drop");
+                    //Log.d("drop", "drop");
                 }
             }
         }).start();

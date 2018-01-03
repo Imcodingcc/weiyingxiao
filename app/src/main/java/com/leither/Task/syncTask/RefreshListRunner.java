@@ -1,6 +1,6 @@
 package com.leither.Task.syncTask;
 
-import com.leither.scripts.syncScripts.RefreshConversations;
+import com.leither.scripts.syncScripts.RefreshMsg;
 
 public class RefreshListRunner extends Thread{
 
@@ -14,7 +14,7 @@ public class RefreshListRunner extends Thread{
     public void run() {
         while (true){
             try {
-                //syncTaskRunner.addScript(new RefreshConversations(null));
+                syncTaskRunner.addScript(new RefreshMsg(null));
                 Thread.sleep(60000);
             } catch (InterruptedException e) {
                 e.printStackTrace();

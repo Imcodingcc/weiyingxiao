@@ -18,6 +18,12 @@ public class SyncScript {
         return "Did not do anything";
     }
 
+    public void onComplete(String value){
+        if(response != null){
+            response.send(value);
+        }
+    }
+
     String returnValue(Object obj){
         Map<String, Object> map = new HashMap<>();
         map.put("code", "0");

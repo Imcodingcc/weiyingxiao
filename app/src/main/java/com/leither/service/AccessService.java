@@ -35,7 +35,7 @@ public class AccessService extends AccessibilityService{
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.d("AccessibilityEvent", String.valueOf(event.getEventType()));
+        //Log.d("AccessibilityEvent", String.valueOf(event.getEventType()));
     }
 
     @Override
