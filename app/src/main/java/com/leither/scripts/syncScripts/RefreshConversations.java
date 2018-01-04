@@ -56,7 +56,6 @@ public class RefreshConversations extends SyncScript{
         if(list1.size() == 0 || list2.size() == 0 || list3.size() == 0){
             throw new NodeNullException("conversation not found");
         }
-        String[][] res = new String[list1.size()][3];
         for (int i = 0; i < list1.size(); i++) {
             CharSequence a1, a2, a3;
             a1 = list1.get(i).getText();
@@ -69,13 +68,13 @@ public class RefreshConversations extends SyncScript{
         return msgSummaries;
     }
 
-    private List<MsgSummary> getConversationList() throws NodeNullException {
+    private List<MsgSummary> getConversationList() throws Exception{
         List<MsgSummary> list = new ArrayList<>();
         _getConversationList(list, null);
         return deduplication(list);
     }
 
-    private void _getConversationList(List<MsgSummary> list, List<MsgSummary> last) throws NodeNullException {
+    private void _getConversationList(List<MsgSummary> list, List<MsgSummary> last) throws Exception{
         if(last == null){
             last = new ArrayList<>();
             last.add(new MsgSummary("", "", ""));
@@ -85,6 +84,7 @@ public class RefreshConversations extends SyncScript{
             list.addAll(list1);
             BasicAction.slide(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
             last = list1;
+            Thread.sleep(200);
             _getConversationList(list, last);
         }
     }

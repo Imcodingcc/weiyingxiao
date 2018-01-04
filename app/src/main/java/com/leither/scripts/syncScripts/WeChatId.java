@@ -2,6 +2,7 @@ package com.leither.scripts.syncScripts;
 
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.exception.NodeNullException;
 import com.leither.operation.BasicAction;
@@ -34,16 +35,16 @@ public class WeChatId extends SyncScript{
                         .getWeChatResourceId()
                         .weChat_account_id);
         Map<String, String> map = new HashMap<>();
-        JSONObject jsonObject = null;
         if(idsInfo.size() >=4){
             map.put("id", idsInfo.get(0).getText().toString());
             map.put("qq", idsInfo.get(1).getText().toString());
             map.put("phoneNum", idsInfo.get(2).getText().toString());
             map.put("email", idsInfo.get(3).getText().toString());
-            jsonObject = new JSONObject(map);
         }
-        if(jsonObject != null){
-            Global.getDefault().setWeChatId(returnValue(jsonObject));
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(map.keySet().size() != 0){
+            String res = objectMapper.writeValueAsString(map);
+            Global.getDefault().setWeChatId(returnValue(res));
             return "success";
         }
         throw new NodeNullException("node not found");

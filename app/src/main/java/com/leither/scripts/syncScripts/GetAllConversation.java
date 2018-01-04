@@ -2,6 +2,7 @@ package com.leither.scripts.syncScripts;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.entity.MsgContent;
 import com.leither.share.Global;
@@ -22,11 +23,8 @@ public class GetAllConversation extends SyncScript{
     @Override
     public String exec() throws Exception{
         Map<String, MsgContent> msgSummaryMap = Global.getDefault().getAllConversation();
-        Set<String> set = msgSummaryMap.keySet();
-        for (String s : set) {
-            Log.d("CONTENT", msgSummaryMap.get(s).toString());
-        }
-        JSONObject jsonObject = new JSONObject(msgSummaryMap);
-        return returnValue(jsonObject);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String res = objectMapper.writeValueAsString(msgSummaryMap);
+        return returnValue(res);
     }
 }

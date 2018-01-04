@@ -9,7 +9,6 @@ import com.leither.Task.syncTask.SyncTaskRunner;
 import com.leither.Task.asyncTask.Task;
 import com.leither.Task.asyncTask.TaskFactory;
 import com.leither.Task.asyncTask.AsyncTaskRunner;
-import com.leither.operation.BasicAction;
 import com.leither.scripts.syncScripts.RefreshConversations;
 import com.leither.scripts.syncScripts.SyncScript;
 import com.leither.scripts.syncScripts.WeChatId;
@@ -25,7 +24,8 @@ public class HttpServer implements Server{
             "WeChatId",
             "GetWeChatId",
             "GetRecentConversation",
-            "GetAllConversation"};
+            "GetAllConversation",
+            "GetOneChatRecord"};
 
     private AsyncTaskRunner asyncTaskRunner;
     private SyncTaskRunner syncTaskRunner;

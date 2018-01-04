@@ -4,6 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 
+import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgContent;
 import com.leither.entity.MsgSummary;
 import com.leither.operation.RootedAction;
@@ -17,6 +18,16 @@ public class Global {
     private static Global global = null;
 
     private String weChatId = "";
+
+    public Map<String, ChatMsg> getChatMsgMap() {
+        return chatMsgMap;
+    }
+
+    public void setChatMsgMap(Map<String, ChatMsg> chatMsgMap) {
+        this.chatMsgMap = chatMsgMap;
+    }
+
+    private Map<String, ChatMsg> chatMsgMap =new HashMap<>();
 
     public Map<String, MsgSummary> getConversationList() {
         return ConversationList;

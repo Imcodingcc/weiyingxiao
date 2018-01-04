@@ -6,6 +6,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.entity.MsgContent;
+import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgSummary;
 import com.leither.exception.NodeNullException;
 import com.leither.operation.BasicAction;
@@ -13,6 +14,7 @@ import com.leither.share.Global;
 import com.leither.weChatVersion.WeChatResourceId;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RefreshMsg extends SyncScript{
@@ -31,9 +33,7 @@ public class RefreshMsg extends SyncScript{
 
     private void getConversationContent() throws Exception{
         BasicAction.DoubleClickById(weChatResourceId.weChat_main_tab, 0);
-        Thread.sleep(500);
-        BasicAction.DoubleClickById(weChatResourceId.weChat_title, 0);
-        Thread.sleep(200);
+        Thread.sleep(1000);
         List<AccessibilityNodeInfo> tabMsgCountAll =
                 accessibilityService
                         .getRootInActiveWindow()
@@ -67,7 +67,6 @@ public class RefreshMsg extends SyncScript{
                 int readCount;
                 String name;
                 String lastTime;
-                List<String> msg;
                 if(msgCount.size() == 0){
                     continue;
                 }else{
@@ -96,7 +95,7 @@ public class RefreshMsg extends SyncScript{
                     throw new NodeNullException("content view not found or msg is null");
                 }
 
-                List<String> texts = new ArrayList<>();
+                List<ChatMsg> texts = new ArrayList<>();
                 for (int i1 = 0; i1 < readCount; i1++) {
                     Thread.sleep(200);
                     Rect rect1 = new Rect();
@@ -117,26 +116,30 @@ public class RefreshMsg extends SyncScript{
                     copy.get(0).getBoundsInScreen(rect);
                     Global.getDefault().getRootedAction().tap(rect);
                     String text = Global.getDefault().getClipboardManager().getText().toString();
-                    texts.add(text);
+                    texts.add(new ChatMsg(name, text));
                 }
                 MsgContent megs = Global.getDefault().getRecentConversation().get(name);
+                Collections.reverse(texts);
                 if(megs != null){
                     megs.getMsg().addAll(texts);
                 }else{
                     megs = new MsgContent();
                     megs.setMsg(new ArrayList<>(texts));
                 }
-                megs.setIsRead(0);
                 megs.setLastTime(lastTime);
                 Global.getDefault().getRecentConversation().put(name, megs);
-                addToAll(name, megs);
+
+                MsgContent msgContent = new MsgContent();
+                msgContent.setMsg(texts);
+                addToAll(name, msgContent);
+
                 if(!Global.getDefault().getConversationList().containsKey(name)){
                     Global.getDefault()
                             .getConversationList()
                             .put(name,
                                     new MsgSummary(name,
                                             lastTime,
-                                            texts.get(texts.size() -1)));
+                                            texts.get(texts.size() -1).getMsg()));
                 }
                 Thread.sleep(200);
                 BasicAction.back(1);

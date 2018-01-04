@@ -2,6 +2,7 @@ package com.leither.Task.syncTask;
 
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.scripts.syncScripts.GetAllConversation;
+import com.leither.scripts.syncScripts.GetOneChatRecord;
 import com.leither.scripts.syncScripts.GetRecentConversation;
 import com.leither.scripts.syncScripts.GetConversationList;
 import com.leither.scripts.syncScripts.GetWeChatId;
@@ -38,6 +39,9 @@ public class ScriptFactory {
                 break;
             case "GetAllConversation":
                 syncScript = new GetAllConversation(response);
+                break;
+            case "GetOneChatRecord":
+                syncScript = new GetOneChatRecord(response, content);
                 break;
             default:
                 syncScript = new SyncScript(response);

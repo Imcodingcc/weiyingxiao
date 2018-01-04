@@ -15,7 +15,7 @@ public class RefreshListRunner extends Thread{
         while (true){
             try {
                 syncTaskRunner.addScript(new RefreshMsg(null));
-                Thread.sleep(60000);
+                Thread.sleep(20000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

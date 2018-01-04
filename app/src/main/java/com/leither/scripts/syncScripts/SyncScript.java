@@ -24,11 +24,7 @@ public class SyncScript {
         }
     }
 
-    String returnValue(Object obj){
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", "0");
-        map.put("msg", obj);
-        JSONObject res = new JSONObject(map);
-        return  res.toString();
+    String returnValue(String obj){
+        return  "{\"code\": 0, \"msg\": "+ obj +"}";
     }
 }

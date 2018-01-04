@@ -3,18 +3,25 @@ package com.leither.entity;
 import java.util.List;
 
 public class MsgContent {
-    private List<String> msg;
-    private int isRead;
+    private List<ChatMsg> msg;
 
     public String getLastTime() {
         return lastTime;
     }
 
+    public List<ChatMsg> getMsg() {
+        return msg;
+    }
+
+    public void setMsg(List<ChatMsg> msg) {
+        this.msg = msg;
+    }
+
     @Override
+
     public String toString() {
         return "MsgContent{" +
                 "msg=" + msg +
-                ", isRead=" + isRead +
                 ", lastTime='" + lastTime + '\'' +
                 '}';
     }
@@ -24,20 +31,4 @@ public class MsgContent {
     }
 
     private String lastTime;
-
-    public int getIsRead() {
-        return isRead;
-    }
-
-    public void setIsRead(int isRead) {
-        this.isRead = isRead;
-    }
-
-    public List<String> getMsg() {
-        return msg;
-    }
-
-    public void setMsg(List<String> msg) {
-        this.msg = msg;
-    }
 }

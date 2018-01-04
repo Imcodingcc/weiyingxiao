@@ -1,30 +1,27 @@
 package com.leither.scripts.syncScripts;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
-import com.leither.entity.MsgSummary;
+import com.leither.entity.MsgContent;
 import com.leither.share.Global;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-public class GetConversationList extends SyncScript{
+public class GetOneChatRecord extends SyncScript{
 
     public AsyncHttpServerResponse response;
-    public GetConversationList(AsyncHttpServerResponse response){
+    private String param;
+    public GetOneChatRecord(AsyncHttpServerResponse response, String param){
         super(response);
         this.response = response;
+        this.param = param;
     }
     @Override
     public String exec() throws Exception{
-        Map<String, MsgSummary> msgSummaryMap = Global.getDefault().getConversationList();
+        MsgContent msgContent= Global.getDefault().getAllConversation().get(param);
+        if(msgContent == null){
+            return returnValue(" ");
+        }
         ObjectMapper objectMapper = new ObjectMapper();
-        String res = objectMapper.writeValueAsString(msgSummaryMap);
+        String res = objectMapper.writeValueAsString(msgContent);
         return returnValue(res);
     }
 }
