@@ -18,7 +18,7 @@ public class GetOneChatRecord extends SyncScript{
     public String exec() throws Exception{
         MsgContent msgContent= Global.getDefault().getAllConversation().get(param);
         if(msgContent == null){
-            return returnValue(" ");
+            return returnValue("null");
         }
         ObjectMapper objectMapper = new ObjectMapper();
         String res = objectMapper.writeValueAsString(msgContent);

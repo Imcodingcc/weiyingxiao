@@ -3,6 +3,7 @@ package com.leither.activity;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        preInit();
-        //if(!isPermission()) return;
+        if(!isPermission()) {
+            finish();
+            return;
+        }
         init();
     }
 
@@ -60,10 +63,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void preInit(){
-        Global.getDefault().setRootedAction(new RootedAction());
-    }
     private void init(){
+        Global.getDefault().setRootedAction(new RootedAction());
         getMediaProject();
         startService();
     }
@@ -101,6 +102,22 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "请先打开辅助功能, 再重启app", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if(!isAppInstalled(this)){
+            Toast.makeText(this, "请先安装微信APP", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return Tools.isRoot();
+    }
+
+    private boolean isAppInstalled(Context context) {
+        PackageManager pm = context.getPackageManager();
+        boolean installed;
+        try {
+            pm.getPackageInfo("com.tencent.mm", PackageManager.GET_ACTIVITIES);
+            installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            installed = false;
+        }
+        return installed;
     }
 }

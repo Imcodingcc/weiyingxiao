@@ -38,4 +38,11 @@ public class RootedAction {
         String action = "input touchscreen swipe " + left + " " + top + " " + left + " " + top + " " + 1500 + "\n";
         execCommand(action);
     }
+
+    public void back(int times) throws IOException, InterruptedException {
+        String action = "input keyevent 4";
+        for (int i = times; i > 0; i--) {
+            execCommand(action);
+        }
+    }
 }

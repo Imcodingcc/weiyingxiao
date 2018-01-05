@@ -16,35 +16,25 @@ public class WebSocketServer implements Server{
     private BlockingQueue<byte[]> dataList;
     private Map<String, BlockingQueue<Boolean>> sendMap = new HashMap<>();
 
-    WebSocketServer(BlockingQueue<byte[]> dataList){
+    WebSocketServer(BlockingQueue<byte[]> dataList, AsyncHttpServer asyncHttpServer){
         this.dataList = dataList;
+        setListener(asyncHttpServer);
     }
 
     @Override
     public void setListener(AsyncHttpServer server) {
-        server.websocket("/live", new AsyncHttpServer.WebSocketRequestCallback() {
-            @Override
-            public void onConnected(final WebSocket webSocket, AsyncHttpServerRequest request) {
-                BlockingQueue<Boolean> sendList = new LinkedBlockingDeque<>(3);
-                sendList.offer(true);
-                sendList.offer(true);
-                sendMap.put(webSocket.toString(), sendList);
-                new SendJpgThread(webSocket, sendList, dataList).start();
+        server.websocket("/live", (webSocket, request) -> {
+            BlockingQueue<Boolean> sendList = new LinkedBlockingDeque<>(3);
+            sendList.offer(true);
+            sendList.offer(true);
+            sendMap.put(webSocket.toString(), sendList);
+            new SendJpgThread(webSocket, sendList, dataList).start();
 
-                webSocket.setClosedCallback(new CompletedCallback() {
-                    @Override
-                    public void onCompleted(Exception ex) {
-                            if (ex != null) Log.e("WebSocket", "Error");
-                    }
-                });
+            webSocket.setClosedCallback(ex -> {
+                    if (ex != null) Log.e("WebSocket", "Error");
+            });
 
-                webSocket.setStringCallback(new WebSocket.StringCallback() {
-                    @Override
-                    public void onStringAvailable(String s) {
-                        sendMap.get(webSocket.toString()).offer(true);
-                    }
-                });
-            }
+            webSocket.setStringCallback(s -> sendMap.get(webSocket.toString()).offer(true));
         });
     }
 }

@@ -31,7 +31,7 @@ public class SendMsg extends SyncScript{
     @Override
     public String exec() throws Exception{
         JSONObject jsonObject = new JSONObject(param);
-        String who = jsonObject.getString("who");
+        String who = jsonObject.getString("name");
         String msg = jsonObject.getString("msg");
         BasicAction.reOpenWeChat();
         BasicAction.Click("搜索", 0);

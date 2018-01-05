@@ -15,12 +15,12 @@ import com.leither.weChatVersion.WeChatResourceId;
 public class AccessService extends AccessibilityService{
 
     void initScripts() throws Exception{
-        SocketCreator.getDefault().setHttpListener();
         ((ShotApplication)getApplication()).setAccessibilityService(this);
         Global.getDefault().setAccessibilityService(this);
         Global.getDefault().setWeChatResourceId(new WeChatResourceId("6.5.23"));
         ClipboardManager clipboardManager = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         Global.getDefault().setClipboardManager(clipboardManager);
+        SocketCreator.getDefault().setHttpListener();
     }
 
     @Override

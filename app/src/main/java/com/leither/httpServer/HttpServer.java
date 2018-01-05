@@ -1,6 +1,7 @@
 package com.leither.httpServer;
 
 import android.util.Base64;
+import android.util.Log;
 
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import com.leither.Task.syncTask.RefreshListRunner;
@@ -12,16 +13,19 @@ import com.leither.Task.asyncTask.AsyncTaskRunner;
 import com.leither.scripts.syncScripts.RefreshConversations;
 import com.leither.scripts.syncScripts.SyncScript;
 import com.leither.scripts.syncScripts.WeChatId;
+import com.leither.share.Global;
 
 import java.io.UnsupportedEncodingException;
 
 public class HttpServer implements Server{
     private String[] asyncHttpInterface = new String[]{"Mass", "AddOne", "BatchAdd"};
-    private String[] syncHttpInterface = new String[]{"GetConversationList",
+    private String[] syncHttpInterface = new String[]{
             "RefreshConversations",
             "OpenConversation",
             "SendMsg",
-            "WeChatId",
+            "WeChatId", };
+    private String[] syncAndReturnInterface = new String[]{
+            "GetConversationList",
             "GetWeChatId",
             "GetRecentConversation",
             "GetAllConversation",
@@ -29,26 +33,32 @@ public class HttpServer implements Server{
 
     private AsyncTaskRunner asyncTaskRunner;
     private SyncTaskRunner syncTaskRunner;
+    private SyncTaskRunner syncAndReturnRunner;
 
-    HttpServer(){
-        asyncTaskRunner = new AsyncTaskRunner();
-        syncTaskRunner = new SyncTaskRunner();
-        asyncTaskRunner.start();
-        syncTaskRunner.start();
-        init();
+    HttpServer(AsyncHttpServer asyncHttpServer){
+        new Thread(()->{
+            if(!preStart()) return;
+            setListener(asyncHttpServer);
+        }).start();
     }
 
-    private void init(){
-        new Thread(() -> {
-            try {
-                Thread.sleep(20000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            syncTaskRunner.addScript(new WeChatId(null));
-            syncTaskRunner.addScript(new RefreshConversations(null));
-            new RefreshListRunner(syncTaskRunner).start();
-        }).start();
+    private boolean preStart(){
+        asyncTaskRunner = new AsyncTaskRunner();
+        syncTaskRunner = new SyncTaskRunner();
+        syncAndReturnRunner = new SyncTaskRunner();
+        asyncTaskRunner.start();
+        syncTaskRunner.start();
+        syncAndReturnRunner.start();
+        try {
+            Global.getDefault().getRootedAction().back(1);
+            new WeChatId(null).exec();
+            new RefreshConversations(null).exec();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        new RefreshListRunner(syncTaskRunner).start();
+        return true;
     }
 
     @Override
@@ -95,6 +105,25 @@ public class HttpServer implements Server{
                 }else{
                     response.send("other tasks is running");
                 }
+            });
+        }
+
+        for (final String sync : syncAndReturnInterface) {
+            server.post("/" + sync, (request, response) -> {
+                response.getHeaders().add("Access-Control-Allow-Origin", "*");
+                response.getHeaders().add("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+                response.getHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+                String param = "";
+                if(request.getBody() !=null){
+                    byte[] bytes = Base64.decode(request.getBody().toString(), Base64.DEFAULT);
+                    try {
+                        param = new String(bytes, "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                SyncScript syncScript = ScriptFactory.getTask(sync, response, param);
+                syncAndReturnRunner.addScript(syncScript);
             });
         }
     }

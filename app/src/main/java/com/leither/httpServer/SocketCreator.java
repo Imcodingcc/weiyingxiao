@@ -19,11 +19,11 @@ public class SocketCreator {
     }
 
     public void setWsListener(BlockingQueue<byte[]> dataList){
-        new WebSocketServer(dataList).setListener(server);
+        new WebSocketServer(dataList, server);
     }
 
     public void setHttpListener(){
-        new HttpServer().setListener(server);
+        new HttpServer(server);
     }
 
     public static SocketCreator getDefault(){
