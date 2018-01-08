@@ -10,15 +10,22 @@ import com.leither.Task.syncTask.SyncTaskRunner;
 import com.leither.Task.asyncTask.Task;
 import com.leither.Task.asyncTask.TaskFactory;
 import com.leither.Task.asyncTask.AsyncTaskRunner;
+import com.leither.common.Tools;
 import com.leither.scripts.syncScripts.RefreshConversations;
 import com.leither.scripts.syncScripts.SyncScript;
 import com.leither.scripts.syncScripts.WeChatId;
 import com.leither.share.Global;
 
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 
 public class HttpServer implements Server{
-    private String[] asyncHttpInterface = new String[]{"Mass", "AddOne", "BatchAdd"};
+    private static final String TAG = "HttpServer";
+
+    private String[] asyncHttpInterface = new String[]{
+            "Mass",
+            "AddOne",
+            "BatchAdd"};
     private String[] syncHttpInterface = new String[]{
             "RefreshConversations",
             "OpenConversation",
@@ -43,6 +50,11 @@ public class HttpServer implements Server{
     }
 
     private boolean preStart(){
+        try {
+            connectBox();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         asyncTaskRunner = new AsyncTaskRunner();
         syncTaskRunner = new SyncTaskRunner();
         syncAndReturnRunner = new SyncTaskRunner();
@@ -57,12 +69,31 @@ public class HttpServer implements Server{
             e.printStackTrace();
             return false;
         }
-        new RefreshListRunner(syncTaskRunner).start();
+        //new RefreshListRunner(syncTaskRunner).start();
+        return true;
+    }
+
+    private boolean connectBox() throws Exception {
+        InetAddress inetAddress = Tools.getLocalHostLANAddress();
+        String ip = inetAddress.getHostName();
+        Log.d(TAG, "connectBox: " + ip);
         return true;
     }
 
     @Override
     public void setListener(AsyncHttpServer server) {
+        server.get("/AddPerson", (request, response) -> {
+            request.getHeaders().add("text/plain", "charset=utf-8");
+            response.getHeaders().add("Access-Control-Allow-Origin", "*");
+            response.getHeaders().add("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+            response.getHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+            String param= request.getQuery().get("phoneNum").toString();
+            param = param.substring(1, param.length() -1);
+            Task task = TaskFactory.getTask("AddOne", param);
+            asyncTaskRunner.addTask(task);
+            response.send("等待添加完成");
+        });
+
         for (final String async : asyncHttpInterface) {
             server.post("/" + async, (request, response) -> {
                 request.getHeaders().add("text/plain", "charset=utf-8");

@@ -11,14 +11,14 @@ public class MsgSummary {
     public String toString() {
         return "MsgSummary{" +
                 "title='" + title + '\'' +
-                ", lasTime='" + lasTime + '\'' +
+                ", lastTime='" + lastTime + '\'' +
                 ", lastMsg='" + lastMsg + '\'' +
                 '}';
     }
 
-    public MsgSummary(String title, String lasTime, String lastMsg) {
+    public MsgSummary(String title, String lastTime, String lastMsg) {
         this.title = title;
-        this.lasTime = lasTime;
+        this.lastTime = lastTime;
         this.lastMsg = lastMsg;
     }
 
@@ -26,12 +26,12 @@ public class MsgSummary {
         this.title = title;
     }
 
-    public String getLasTime() {
-        return lasTime;
+    public String getLastTime() {
+        return lastTime;
     }
 
-    public void setLasTime(String lasTime) {
-        this.lasTime = lasTime;
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
     }
 
     public String getLastMsg() {
@@ -42,6 +42,6 @@ public class MsgSummary {
         this.lastMsg = lastMsg;
     }
 
-    private String lasTime;
+    private String lastTime;
     private String lastMsg;
 }
