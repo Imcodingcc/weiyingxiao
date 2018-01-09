@@ -1,5 +1,6 @@
 package com.leither.activity;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +9,9 @@ import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dylan_wang.capturescreen.R;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent accessIntent= null;
     private int REQUEST_MEDIA_PROJECTION = 1;
     private MediaProjectionManager mMediaProjectionManager;
+    private static final String TAG = MainActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +67,20 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @SuppressLint("SetTextI18n")
     private void init(){
+        Toast.makeText(this, "请不要操作,直到等待初始化完成", Toast.LENGTH_SHORT).show();
         Global.getDefault().setRootedAction(new RootedAction());
         getMediaProject();
         startService();
+        new Thread(()->{
+            try {
+                String ipAddress = Tools.getLocalHostLANAddress().getHostName();
+                runOnUiThread(()-> ((TextView)findViewById(R.id.ipAddress)).setText("IP地址: " + ipAddress));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void startService(){

@@ -30,7 +30,7 @@ public class Mass implements AsyncScript {
     }
 
     @Override
-    public void onComplete() {
+    public void onComplete(Exception e, String result) {
 
     }
 }

@@ -9,6 +9,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/AndroidAsync" />
+            <option value="$PROJECT_DIR$/AndroidAsyncSample" />
+            <option value="$PROJECT_DIR$/AndroidAsyncStetho" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

@@ -18,17 +18,19 @@ public class AsyncTaskRunner extends Thread{
 
     @Override
     public void run() {
-        while(true) {AsyncScript asyncScript = null;
+        while(true) {
+            AsyncScript asyncScript = null;
+            String result;
             try {
                 Task task = queue.take();
                 long id = task.getId();
                 asyncScript = task.getAsyncScript();
-                asyncScript.start();
-                asyncScript.onComplete();
+                result = asyncScript.start();
+                asyncScript.onComplete(null, result);
                 waitMap.remove(id);
             } catch (Exception e) {
                 assert asyncScript != null;
-                asyncScript.onComplete();
+                asyncScript.onComplete(e, null);
                 try {
                     BasicAction.reOpenWeChat();
                 } catch (Exception e1) {

@@ -19,11 +19,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="确保打开了本软件的辅助功能"/>
-        <Button
-            android:layout_gravity="center"
+
+        <TextView
+            android:id="@+id/ipAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="点击打开微信APP"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="22sp" />
 
     </LinearLayout>
 

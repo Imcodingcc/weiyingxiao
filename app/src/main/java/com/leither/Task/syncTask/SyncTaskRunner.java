@@ -22,7 +22,6 @@ public class SyncTaskRunner extends Thread{
             SyncScript syncScript;
             try {
                 syncScript = queue.take();
-                Log.d("TASK", "WORK");
                 syncScript.onComplete(syncScript.exec());
             } catch (Exception e) {
                 e.printStackTrace();
