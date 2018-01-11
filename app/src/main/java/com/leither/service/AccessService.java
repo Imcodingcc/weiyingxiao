@@ -14,6 +14,8 @@ import com.leither.weChatVersion.WeChatResourceId;
 
 public class AccessService extends AccessibilityService{
 
+    private static final String TAG = AccessService.class.getName();
+
     void initScripts() throws Exception{
         ((ShotApplication)getApplication()).setAccessibilityService(this);
         Global.getDefault().setAccessibilityService(this);
@@ -25,6 +27,7 @@ public class AccessService extends AccessibilityService{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG, "onStartCommand: ");
         try {
             initScripts();
         } catch (Exception e) {

@@ -34,6 +34,6 @@ public class Task implements Comparable<Task>{
 
     @Override
     public int compareTo(@NonNull Task another) {
-        return this.nice > another.nice ? 1 : this.nice > another.nice ? -1: 0;
+        return this.nice > another.nice? 1 : this.nice == another.nice ? 0 : -1;
     }
 }

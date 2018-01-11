@@ -19,10 +19,6 @@ public class AsyncTaskRunner extends Thread{
     private Map<Long, Task> waitMap = new HashMap<>();
     private Map<Long, Task> pausedMap= new HashMap<>();
     private static final String TAG = AsyncTaskRunner.class.getName();
-    private final Object lock = new Object();
-    public AsyncTaskRunner(){
-
-    }
 
     public AsyncTaskRunner(String name){
         super(name);
@@ -30,28 +26,25 @@ public class AsyncTaskRunner extends Thread{
 
     @Override
     public void run() {
-        synchronized (lock){
-            while(true) {
-                Log.d(TAG, "run: " + "BEFORE");
-                AsyncScript asyncScript = null;
-                String result;
+        while(true) {
+            AsyncScript asyncScript = null;
+            String result;
+            try {
+                Task task = queue.take();
+                long id = task.getId();
+                asyncScript = task.getAsyncScript();
+                result = asyncScript.start();
+                asyncScript.onComplete(null, result);
+                waitMap.remove(id);
+            } catch (Exception e) {
+                assert asyncScript != null;
+                asyncScript.onComplete(e, null);
                 try {
-                    Task task = queue.take();
-                    long id = task.getId();
-                    asyncScript = task.getAsyncScript();
-                    result = asyncScript.start();
-                    asyncScript.onComplete(null, result);
-                    waitMap.remove(id);
-                } catch (Exception e) {
-                    assert asyncScript != null;
-                    asyncScript.onComplete(e, null);
-                    try {
-                        BasicAction.reOpenWeChat();
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-                    e.printStackTrace();
+                    BasicAction.reOpenWeChat();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
                 }
+                e.printStackTrace();
             }
         }
     }
@@ -76,5 +69,4 @@ public class AsyncTaskRunner extends Thread{
         Task task = waitMap.remove(id);
         pausedMap.put(task.getId(), task);
     }
-
 }
