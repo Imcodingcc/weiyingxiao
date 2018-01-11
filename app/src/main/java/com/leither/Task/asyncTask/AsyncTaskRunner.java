@@ -1,6 +1,7 @@
 package com.leither.Task.asyncTask;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import com.leither.operation.BasicAction;
 import com.leither.scripts.asyncScripts.AsyncScript;
@@ -9,34 +10,48 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 @SuppressLint("UseSparseArrays")
 public class AsyncTaskRunner extends Thread{
-    public BlockingQueue<Task> queue = new LinkedBlockingDeque<>(10);
+    public BlockingQueue<Task> queue = new PriorityBlockingQueue<>(10);
     private Map<Long, Task> waitMap = new HashMap<>();
     private Map<Long, Task> pausedMap= new HashMap<>();
+    private static final String TAG = AsyncTaskRunner.class.getName();
+    private final Object lock = new Object();
+    public AsyncTaskRunner(){
+
+    }
+
+    public AsyncTaskRunner(String name){
+        super(name);
+    }
 
     @Override
     public void run() {
-        while(true) {
-            AsyncScript asyncScript = null;
-            String result;
-            try {
-                Task task = queue.take();
-                long id = task.getId();
-                asyncScript = task.getAsyncScript();
-                result = asyncScript.start();
-                asyncScript.onComplete(null, result);
-                waitMap.remove(id);
-            } catch (Exception e) {
-                assert asyncScript != null;
-                asyncScript.onComplete(e, null);
+        synchronized (lock){
+            while(true) {
+                Log.d(TAG, "run: " + "BEFORE");
+                AsyncScript asyncScript = null;
+                String result;
                 try {
-                    BasicAction.reOpenWeChat();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
+                    Task task = queue.take();
+                    long id = task.getId();
+                    asyncScript = task.getAsyncScript();
+                    result = asyncScript.start();
+                    asyncScript.onComplete(null, result);
+                    waitMap.remove(id);
+                } catch (Exception e) {
+                    assert asyncScript != null;
+                    asyncScript.onComplete(e, null);
+                    try {
+                        BasicAction.reOpenWeChat();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    e.printStackTrace();
                 }
-                e.printStackTrace();
             }
         }
     }
@@ -61,4 +76,5 @@ public class AsyncTaskRunner extends Thread{
         Task task = waitMap.remove(id);
         pausedMap.put(task.getId(), task);
     }
+
 }

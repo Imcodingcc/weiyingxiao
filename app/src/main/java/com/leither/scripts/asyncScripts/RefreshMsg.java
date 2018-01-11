@@ -19,11 +19,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RefreshMsg implements AsyncScript{
+public class RefreshMsg extends AsyncScript {
     private static final String TAG = RefreshMsg.class.getName();
 
     private AccessibilityService accessibilityService = Global.getDefault().getAccessibilityService();
     private WeChatResourceId weChatResourceId = Global.getDefault().getWeChatResourceId();
+
+    public RefreshMsg() {
+        super(null);
+    }
 
     private void getConversationContent() throws Exception{
         BasicAction.DoubleClickById(weChatResourceId.weChat_main_tab, 0);
@@ -161,13 +165,6 @@ public class RefreshMsg implements AsyncScript{
     @Override
     public String start() throws Exception {
         getConversationContent();
-        return "ok";
-    }
-
-    @Override
-    public void onComplete(Exception e, String result) {
-        if (e == null) {
-            Log.d(TAG, "onComplete: " + result);
-        }
+        return "0";
     }
 }

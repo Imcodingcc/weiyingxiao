@@ -27,8 +27,9 @@ public class HttpServer implements Server{
 
     private String[] asyncHttpInterface = new String[]{
             "Mass",
-            "AddOne",
+            "AddFriend",
             "BatchAdd",
+            "GetFriendStatus",
             "SendMsg"};
 
     private String[] syncAndReturnInterface = new String[]{
@@ -41,6 +42,7 @@ public class HttpServer implements Server{
 
     private AsyncTaskRunner asyncTaskRunner;
     private SyncTaskRunner syncAndReturnRunner;
+    private RefreshListRunner refreshListRunner;
 
     HttpServer(AsyncHttpServer asyncHttpServer){
         new Thread(()->{
@@ -51,7 +53,7 @@ public class HttpServer implements Server{
     }
 
     private boolean startThread(){
-        asyncTaskRunner = new AsyncTaskRunner();
+        asyncTaskRunner = new AsyncTaskRunner("asyncTaskRunner");
         syncAndReturnRunner = new SyncTaskRunner();
         asyncTaskRunner.start();
         syncAndReturnRunner.start();
@@ -63,7 +65,8 @@ public class HttpServer implements Server{
             e.printStackTrace();
             return false;
         }
-        new RefreshListRunner(asyncTaskRunner).start();
+        refreshListRunner = new RefreshListRunner(asyncTaskRunner);
+        refreshListRunner.start();
         return true;
     }
 
@@ -116,9 +119,8 @@ public class HttpServer implements Server{
             server.post("/" + async, (request, response) -> {
                 setHeader(response);
                 String param= request.getBody().toString();
-                Task task = TaskFactory.getTask(async, param);
+                Task task = TaskFactory.getTask(async, response, param);
                 asyncTaskRunner.addTask(task);
-                response.send("ok");
             });
         }
 

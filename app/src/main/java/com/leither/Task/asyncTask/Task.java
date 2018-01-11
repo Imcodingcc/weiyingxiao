@@ -1,13 +1,17 @@
 package com.leither.Task.asyncTask;
 
+import android.support.annotation.NonNull;
+
 import com.leither.scripts.asyncScripts.AsyncScript;
 
-public class Task {
+public class Task implements Comparable<Task>{
     private long id;
+    private int nice;
 
-    public Task(long id, AsyncScript asyncScript) {
+    public Task(int nice, long id, AsyncScript asyncScript) {
         this.id = id;
         this.asyncScript = asyncScript;
+        this.nice = nice;
     }
 
     public long getId() {
@@ -27,4 +31,9 @@ public class Task {
     }
 
     private AsyncScript asyncScript;
+
+    @Override
+    public int compareTo(@NonNull Task another) {
+        return this.nice > another.nice ? 1 : this.nice > another.nice ? -1: 0;
+    }
 }

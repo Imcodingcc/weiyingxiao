@@ -16,9 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WeChatId implements AsyncScript{
+public class WeChatId extends AsyncScript {
     private String[] steps = new String[]{"我", "设置", "帐号与安全"};
     private static final String TAG = WeChatId.class.getName();
+
+    public WeChatId() {
+        super(null);
+    }
 
     @Override
     public String start() throws Exception {
@@ -49,12 +53,5 @@ public class WeChatId implements AsyncScript{
             return "ok";
         }
         throw new NodeNullException("node not found");
-    }
-
-    @Override
-    public void onComplete(Exception e, String result) {
-        if(e == null){
-            Log.d(TAG, "onComplete: " + result);
-        }
     }
 }

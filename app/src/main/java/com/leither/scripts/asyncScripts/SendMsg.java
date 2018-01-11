@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgContent;
 import com.leither.operation.BasicAction;
@@ -17,11 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SendMsg implements AsyncScript{
+public class SendMsg extends AsyncScript {
 
     private static final String TAG = SendMsg.class.getName();
     private String param;
-    public SendMsg(String param){
+    public SendMsg(AsyncHttpServerResponse response, String param){
+        super(response);
         this.param = param;
     }
 
@@ -166,13 +168,6 @@ public class SendMsg implements AsyncScript{
             msgContent.setLastTime(new Date().toString());
             msgContent.getMsg().add(new ChatMsg("我", msg));
         }
-        return "ok";
-    }
-
-    @Override
-    public void onComplete(Exception e, String result) {
-        if (e == null) {
-            Log.d(TAG, "onComplete: " + result);
-        }
+        return "0";
     }
 }

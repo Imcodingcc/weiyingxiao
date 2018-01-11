@@ -1,6 +1,34 @@
 package com.leither.scripts.asyncScripts;
 
-public interface AsyncScript {
-    String start() throws Exception;
-    void onComplete(Exception e, String result);
+import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
+
+public abstract class AsyncScript {
+
+    protected AsyncHttpServerResponse response;
+    public AsyncScript(AsyncHttpServerResponse response){
+        this.response = response;
+    }
+
+    public String start() throws Exception{
+        return null;
+    }
+
+    public void onComplete(Exception e, String result){
+        if(response == null){
+            return;
+        }
+        if(e != null){
+            response.send(errorValue(e.getMessage()));
+        }else{
+            response.send(returnValue(result));
+        }
+    }
+
+    protected String returnValue(String obj){
+        return  "{\"code\": 0, \"msg\": "+ obj +"}";
+    }
+
+    protected String errorValue(String obj){
+        return  "{\"code\": -1, \"msg\": "+ obj +"}";
+    }
 }

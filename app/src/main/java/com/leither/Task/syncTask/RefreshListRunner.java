@@ -20,7 +20,7 @@ public class RefreshListRunner extends Thread{
         while (true){
             try {
                 AsyncScript asyncScript = new RefreshMsg();
-                Task task = new Task(new Date().getTime(), asyncScript);
+                Task task = new Task(1, new Date().getTime(), asyncScript);
                 asyncTaskRunner.addTask(task);
                 Thread.sleep(20000);
             } catch (InterruptedException e) {

@@ -20,11 +20,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class RefreshConversations implements AsyncScript{
+public class RefreshConversations extends AsyncScript {
 
     private static final String TAG = RefreshConversations.class.getName();
     private AccessibilityService accessibilityService = Global.getDefault().getAccessibilityService();
     private WeChatResourceId weChatResourceId = Global.getDefault().getWeChatResourceId();
+
+    public RefreshConversations() {
+        super(null);
+    }
 
     private List<MsgSummary> readChatListById() throws NodeNullException {
         List<MsgSummary> msgSummaries = new ArrayList<>();
@@ -92,13 +96,6 @@ public class RefreshConversations implements AsyncScript{
             map.put(msgSummary.getTitle(), msgSummary);
         }
         Global.getDefault().setConversationList(map);
-        return "ok";
-    }
-
-    @Override
-    public void onComplete(Exception e, String result) {
-        if (e == null) {
-            Log.d(TAG, "onComplete: " + result);
-        }
+        return "0";
     }
 }
