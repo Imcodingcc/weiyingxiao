@@ -30,6 +30,7 @@ public class HttpServer implements Server{
             "AddFriend",
             "BatchAdd",
             "GetFriendStatus",
+            "TouchTest",
             "SendMsg"};
 
     private String[] syncAndReturnInterface = new String[]{
@@ -38,6 +39,7 @@ public class HttpServer implements Server{
             "GetRecentConversation",
             "GetAllConversation",
             "GetOneChatRecord",
+            "GetScreenXy",
             "GetAddOneStatus"};
 
     private AsyncTaskRunner asyncTaskRunner;
@@ -65,8 +67,8 @@ public class HttpServer implements Server{
             e.printStackTrace();
             return false;
         }
-        refreshListRunner = new RefreshListRunner(asyncTaskRunner);
-        refreshListRunner.start();
+        //refreshListRunner = new RefreshListRunner(asyncTaskRunner);
+        //refreshListRunner.start();
         return true;
     }
 

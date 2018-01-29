@@ -1,6 +1,5 @@
 package com.leither.httpServer;
 
-import com.koushikdutta.async.AsyncServer;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import java.util.concurrent.BlockingQueue;
 
@@ -20,6 +19,7 @@ public class SocketCreator {
 
     public void setWsListener(BlockingQueue<byte[]> dataList){
         new WebSocketServer(dataList, server);
+        new InputServer(server);
     }
 
     public void setHttpListener(){

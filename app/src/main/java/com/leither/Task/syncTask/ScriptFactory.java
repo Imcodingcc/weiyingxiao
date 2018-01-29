@@ -1,12 +1,12 @@
 package com.leither.Task.syncTask;
 
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
-import com.leither.scripts.asyncScripts.GetFriendStatus;
 import com.leither.scripts.syncScripts.GetAddOneStatus;
 import com.leither.scripts.syncScripts.GetAllConversation;
 import com.leither.scripts.syncScripts.GetOneChatRecord;
 import com.leither.scripts.syncScripts.GetRecentConversation;
 import com.leither.scripts.syncScripts.GetConversationList;
+import com.leither.scripts.syncScripts.GetScreenXy;
 import com.leither.scripts.syncScripts.GetWeChatId;
 import com.leither.scripts.syncScripts.SyncScript;
 
@@ -31,6 +31,9 @@ public class ScriptFactory {
                 break;
             case "GetAddOneStatus":
                 syncScript = new GetAddOneStatus(response, content);
+                break;
+            case "GetScreenXy":
+                syncScript = new GetScreenXy(response);
                 break;
             default:
                 syncScript = new SyncScript(response);

@@ -35,7 +35,7 @@ public class Tools {
         ByteArrayOutputStream baos;
         byte[] bitmapBytes;
         baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
         bitmapBytes = baos.toByteArray();
         try {
             baos.flush();

@@ -8,6 +8,7 @@ import com.leither.scripts.asyncScripts.GetFriendStatus;
 import com.leither.scripts.asyncScripts.Mass;
 import com.leither.scripts.asyncScripts.AsyncScript;
 import com.leither.scripts.asyncScripts.SendMsg;
+import com.leither.scripts.asyncScripts.TouchTest;
 
 import java.util.Date;
 
@@ -30,6 +31,10 @@ public class TaskFactory {
                 break;
             case "GetFriendStatus":
                 asyncScript = new GetFriendStatus(response, content);
+                task = new Task(-1, new Date().getTime(), asyncScript);
+                break;
+            case "TouchTest":
+                asyncScript = new TouchTest(response, content);
                 task = new Task(-1, new Date().getTime(), asyncScript);
                 break;
             default:

@@ -10,9 +10,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AndroidAsync" />
-            <option value="$PROJECT_DIR$/AndroidAsyncSample" />
-            <option value="$PROJECT_DIR$/AndroidAsyncStetho" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/touchlibiary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

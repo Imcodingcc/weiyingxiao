@@ -1,11 +1,9 @@
 package com.leither.operation;
 
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 public class RootedAction {
     private Process su;

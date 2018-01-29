@@ -3,10 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidAsync/AndroidAsync.iml" filepath="$PROJECT_DIR$/AndroidAsync/AndroidAsync.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AndroidAsyncSample/AndroidAsyncSample.iml" filepath="$PROJECT_DIR$/AndroidAsyncSample/AndroidAsyncSample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AndroidAsyncStetho/AndroidAsyncStetho.iml" filepath="$PROJECT_DIR$/AndroidAsyncStetho/AndroidAsyncStetho.iml" />
       <module fileurl="file://$PROJECT_DIR$/CaptureScreen.iml" filepath="$PROJECT_DIR$/CaptureScreen.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/touchlibiary/touchlibiary.iml" filepath="$PROJECT_DIR$/touchlibiary/touchlibiary.iml" />
     </modules>
   </component>
 </project>

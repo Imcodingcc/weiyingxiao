@@ -4,6 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 
+import com.koushikdutta.async.http.WebSocket;
 import com.leither.Task.syncTask.RefreshListRunner;
 import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgContent;
@@ -11,14 +12,45 @@ import com.leither.entity.MsgSummary;
 import com.leither.operation.RootedAction;
 import com.leither.weChatVersion.WeChatResourceId;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import cn.leither.touchlibiary.Nexus5;
 
 public class Global {
     @SuppressLint("StaticFieldLeak")
     private static Global global = null;
 
+    private Nexus5 nexus5 = new Nexus5();
+
+    private Map<String, Integer> xy = new HashMap<>();
+
+    public Map<String, Integer> getXy() {
+        return xy;
+    }
+
+    public void setXy(Map<String, Integer> xy) {
+        this.xy = xy;
+    }
+
+    public Nexus5 getNexus5() {
+        return nexus5;
+    }
+
     private String weChatId = "";
+
+    private List<WebSocket> webSocketList = new ArrayList<>();
+
+    public List<WebSocket> getWebSocketList() {
+        return webSocketList;
+    }
+
+    public void setWebSocketList(List<WebSocket> webSocketList) {
+        this.webSocketList = webSocketList;
+    }
+
     private Map<String, String> addOneStatus = new HashMap<>();
 
     public Map<String, String> getAddOneStatus() {

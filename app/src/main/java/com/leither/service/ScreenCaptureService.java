@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
+import android.media.Image;
 import android.media.MediaCodec;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
@@ -21,6 +22,7 @@ import android.view.WindowManager;
 import com.leither.common.DeEncodecCommon;
 import com.leither.httpServer.SocketCreator;
 import com.leither.msgEvent.ScreenMsg;
+import com.leither.share.Global;
 import com.leither.share.ShotApplication;
 
 import org.greenrobot.eventbus.EventBus;
@@ -57,6 +59,7 @@ public class ScreenCaptureService extends Service
     {
         super.onCreate();
         createSurface();
+        setXy();
         startOnUIThread();
     }
 
@@ -74,6 +77,11 @@ public class ScreenCaptureService extends Service
         mScreenDensity = metrics.densityDpi;
         encoder = DeEncodecCommon.getMediaCodec();
         encoderInputSurface = encoder.createInputSurface();
+    }
+
+    private void setXy(){
+        Global.getDefault().getXy().put("x", windowWidth);
+        Global.getDefault().getXy().put("y", windowHeight);
     }
 
     public void createMediaProject(){
@@ -115,6 +123,7 @@ public class ScreenCaptureService extends Service
         MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
         int status = encoder.dequeueOutputBuffer(info, 11000);
         if(status >= 0){
+            Image image = encoder.getOutputImage(status);
             ByteBuffer encodedData = encoder.getOutputBuffer(status);
             byte[] outData = new byte[info.size];
             encodedData.get(outData);

@@ -23,6 +23,7 @@ import android.view.WindowManager;
 
 import com.leither.common.Tools;
 import com.leither.httpServer.SocketCreator;
+import com.leither.share.Global;
 import com.leither.share.ShotApplication;
 
 import java.nio.ByteBuffer;
@@ -33,10 +34,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ScreenshotService extends Service
 {
 
+    private static final String TAG = ScreenshotService.class.getName();
     private int windowWidth = 0;
     private int windowHeight = 0;
     private int mScreenDensity = 0;
-    private Bitmap allBitmap = null;
     public static int mResultCode = 0;
     public static Intent mIntent = null;
     private ImageReader mImageReader = null;
@@ -51,29 +52,24 @@ public class ScreenshotService extends Service
         super.onCreate();
         SocketCreator.getDefault().setWsListener(jpgQueue);
         createSurface();
+        setXy();
         startOnUIThread();
     }
 
     private void createSurface(){
         WindowManager windowManager = (WindowManager) getApplication().getSystemService(WINDOW_SERVICE);
         assert windowManager != null;
-        Display display = windowManager.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        windowWidth = size.x;
-        windowHeight = size.y;
         DisplayMetrics metrics = new DisplayMetrics();
-        windowManager.getDefaultDisplay().getMetrics(metrics);
+        windowManager.getDefaultDisplay().getRealMetrics(metrics);
         mScreenDensity = metrics.densityDpi;
-        mImageReader = ImageReader.newInstance(windowWidth/2, windowHeight/2, PixelFormat.RGBA_8888, 2);
-        mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
-            @Override
-            public void onImageAvailable(ImageReader reader) {
-                Image image = reader.acquireLatestImage();
-                if(image != null){
-                    captureAndOffer(image);
-                    image.close();
-                }
+        windowWidth = metrics.widthPixels;
+        windowHeight = metrics.heightPixels;
+        mImageReader = ImageReader.newInstance(windowWidth/2, windowHeight/2, PixelFormat.RGBA_8888, 5);
+        mImageReader.setOnImageAvailableListener(reader -> {
+            Image image = reader.acquireLatestImage();
+            if(image != null){
+                captureAndOffer(image);
+                image.close();
             }
         }, null);
     }
@@ -92,6 +88,11 @@ public class ScreenshotService extends Service
                 mImageReader.getSurface(), null, null);
     }
 
+    private void setXy(){
+        Global.getDefault().getXy().put("x", windowWidth);
+        Global.getDefault().getXy().put("y", windowHeight);
+    }
+
     public void startVirtualDisplay(){
         createMediaProject();
         createVirtualDisplay();
@@ -104,22 +105,19 @@ public class ScreenshotService extends Service
     private void captureAndOffer(Image image){
         int width = image.getWidth();
         int height = image.getHeight();
-        Image.Plane[] planes = image.getPlanes();
-        ByteBuffer buffer = planes[0].getBuffer();
+        final Image.Plane[] planes = image.getPlanes();
+        final ByteBuffer buffer = planes[0].getBuffer();
         int pixelStride = planes[0].getPixelStride();
         int rowStride = planes[0].getRowStride();
         int rowPadding = rowStride - pixelStride * width;
-        if(allBitmap == null){
-            allBitmap = Bitmap.createBitmap(width+rowPadding/pixelStride, height, Bitmap.Config.ARGB_8888);
-        }
-        allBitmap.copyPixelsFromBuffer(buffer);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                byte[] a = Tools.bitmapToByteArray(allBitmap);
-                if(!jpgQueue.offer(a)){
-                    //Log.d("drop", "drop");
-                }
+        Bitmap bitmap = Bitmap.createBitmap(width + rowPadding / pixelStride, height, Bitmap.Config.ARGB_8888);
+        bitmap.copyPixelsFromBuffer(buffer);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height);
+        Bitmap finalBitmap = bitmap;
+        new Thread(() -> {
+            byte[] a = Tools.bitmapToByteArray(finalBitmap);
+            if(!jpgQueue.offer(a)){
+                //Log.d("drop", "drop");
             }
         }).start();
     }

@@ -21,9 +21,8 @@ public class AddFriend extends AsyncScript{
     private AsyncHttpServerResponse response;
 
     public AddFriend(AsyncHttpServerResponse response, String param){
-        super(response);
+        super(null);
         response.send(returnValue("0"));
-        super.response = null;
         try {
             Log.d(TAG, "AddFriend: init " + param);
             JSONObject jsonObject = new JSONObject(param);

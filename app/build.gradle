@@ -22,17 +22,35 @@ android {
     }
     productFlavors {
     }
+
+    signingConfigs {
+        release {
+            storeFile file("/home/lvqiang/AndroidStudioProjects/releaseTest.jks")
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+
+        debug {
+            storeFile file("/home/lvqiang/AndroidStudioProjects/releaseTest.jks")
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+    }
+
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.squareup.okhttp:okhttp:2.7.5'
-    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.google.code.gson:gson:2.8.0'
     //compile 'com.koushikdutta.async:androidasync:2.+'
     compile 'org.greenrobot:eventbus:3.1.1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
     //compile 'de.mrmaffen:libvlc-android:2.1.12@aar'
     compile 'org.lz4:lz4-java:1.4.0'
     compile project(path: ':AndroidAsync')
+    compile project(path: ':touchlibiary')
 }
