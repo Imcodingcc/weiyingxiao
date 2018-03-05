@@ -6,3 +6,6 @@
 /build
 /captures
 AndroidAsync/build
+AndroidAsync/AndroidAsync.iml
+app/app.iml
+touchlibiary/touchlibiary.iml
