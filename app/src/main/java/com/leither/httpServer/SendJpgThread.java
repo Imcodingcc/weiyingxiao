@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.koushikdutta.async.http.WebSocket;
 
+import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +27,7 @@ public class SendJpgThread extends Thread{
                 if (sendList.poll(10L, TimeUnit.SECONDS) != null) {
                     byte[] a;
                     a = dataList.take();
+                    Log.d("socket", "run: " + Arrays.toString(a));
                     webSocket.send(a);
                 } else {
                    webSocket.close();

@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.inputmethodservice.InputMethodService;
 import android.media.projection.MediaProjectionManager;
@@ -132,14 +133,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isAppInstalled(Context context) {
-        PackageManager pm = context.getPackageManager();
-        boolean installed;
-        try {
-            pm.getPackageInfo("com.tencent.mm", PackageManager.GET_ACTIVITIES);
-            installed = true;
-        } catch (PackageManager.NameNotFoundException e) {
-            installed = false;
-        }
-        return installed;
+        //PackageManager pm = context.getPackageManager();
+        //boolean installed;
+        //try {
+        //    pm.getPackageInfo("com.tencent.mm", PackageManager.GET_ACTIVITIES);
+        //    installed = true;
+        //} catch (PackageManager.NameNotFoundException e) {
+        //    installed = false;
+        //}
+        return true;
+        //return installed;
     }
 }
