@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/WeChatController.iml" filepath="$PROJECT_DIR$/WeChatController.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/touchlibiary/touchlibiary.iml" filepath="$PROJECT_DIR$/touchlibiary/touchlibiary.iml" />
+      <module fileurl="file://C:\Users\52453\Projects\Android\WeChatController\touch\touchlibiary.iml" filepath="C:\Users\52453\Projects\Android\WeChatController\touch\touchlibiary.iml" />
     </modules>
   </component>
 </project>
