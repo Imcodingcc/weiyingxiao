@@ -16,8 +16,8 @@ import android.widget.Toast;
 import com.dylan_wang.capturescreen.R;
 import com.leither.common.Tools;
 import com.leither.operation.RootedAction;
-import com.leither.share.Global;
-import com.leither.share.ShotApplication;
+import com.leither.common.Global;
+import com.leither.common.ShotApplication;
 import com.leither.service.AccessService;
 import com.leither.service.ScreenshotService;
 

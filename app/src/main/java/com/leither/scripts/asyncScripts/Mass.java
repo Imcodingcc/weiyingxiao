@@ -3,7 +3,7 @@ package com.leither.scripts.asyncScripts;
 import android.accessibilityservice.AccessibilityService;
 
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
-import com.leither.share.Global;
+import com.leither.common.Global;
 import com.leither.operation.BasicAction;
 
 public class Mass extends AsyncScript {

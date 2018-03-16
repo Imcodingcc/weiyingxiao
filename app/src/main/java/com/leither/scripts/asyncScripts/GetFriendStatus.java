@@ -4,7 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.operation.BasicAction;
-import com.leither.share.Global;
+import com.leither.common.Global;
 
 public class GetFriendStatus extends AsyncScript {
 

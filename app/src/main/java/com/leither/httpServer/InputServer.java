@@ -3,7 +3,7 @@ package com.leither.httpServer;
 import android.util.Log;
 
 import com.koushikdutta.async.http.server.AsyncHttpServer;
-import com.leither.share.Global;
+import com.leither.common.Global;
 
 import org.json.JSONException;
 import org.json.JSONObject;

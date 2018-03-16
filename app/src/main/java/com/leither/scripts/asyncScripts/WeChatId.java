@@ -1,16 +1,11 @@
 package com.leither.scripts.asyncScripts;
 
-import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.exception.NodeNullException;
 import com.leither.operation.BasicAction;
-import com.leither.scripts.syncScripts.SyncScript;
-import com.leither.share.Global;
-
-import org.json.JSONObject;
+import com.leither.common.Global;
 
 import java.util.HashMap;
 import java.util.List;

@@ -10,7 +10,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import com.leither.share.Global;
+import com.leither.common.Global;
 import com.leither.exception.NodeNullException;
 
 import java.io.IOException;

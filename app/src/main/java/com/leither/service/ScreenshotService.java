@@ -4,9 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
-import android.graphics.Point;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
 import android.media.Image;
@@ -17,14 +15,12 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.WindowManager;
 
 import com.leither.common.Tools;
 import com.leither.httpServer.SocketCreator;
-import com.leither.share.Global;
-import com.leither.share.ShotApplication;
+import com.leither.common.Global;
+import com.leither.common.ShotApplication;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.BlockingQueue;

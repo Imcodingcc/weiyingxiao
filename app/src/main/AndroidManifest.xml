@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>
 
     <application
-        android:name="com.leither.share.ShotApplication"
+        android:name="com.leither.common.ShotApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -36,8 +36,6 @@
 
         <service android:name="com.leither.service.ScreenshotService">
         </service>
-        <service android:name="com.leither.service.ScreenCaptureService">
-        </service>
 
         <service android:name="com.leither.service.AccessService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
@@ -49,7 +47,7 @@
                 android:resource="@xml/mmconfig" />
         </service>
 
-        <service android:name="com.leither.service.AdbIME"
+        <service android:name="com.leither.service.AdbIMEService"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>

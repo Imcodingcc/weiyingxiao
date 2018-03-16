@@ -1,11 +1,10 @@
-package com.leither.share;
+package com.leither.common;
 
 import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 
 import com.koushikdutta.async.http.WebSocket;
-import com.leither.Task.syncTask.RefreshListRunner;
 import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgContent;
 import com.leither.entity.MsgSummary;

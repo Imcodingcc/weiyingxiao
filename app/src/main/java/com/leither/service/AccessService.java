@@ -8,8 +8,8 @@ import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.leither.httpServer.SocketCreator;
-import com.leither.share.Global;
-import com.leither.share.ShotApplication;
+import com.leither.common.Global;
+import com.leither.common.ShotApplication;
 import com.leither.weChatVersion.WeChatResourceId;
 
 public class AccessService extends AccessibilityService{

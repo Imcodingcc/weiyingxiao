@@ -1,15 +1,12 @@
 package com.leither.scripts.asyncScripts;
 
 import android.accessibilityservice.AccessibilityService;
-import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.exception.NodeNullException;
 import com.leither.operation.BasicAction;
 import com.leither.entity.MsgSummary;
-import com.leither.scripts.syncScripts.SyncScript;
-import com.leither.share.Global;
+import com.leither.common.Global;
 import com.leither.weChatVersion.WeChatResourceId;
 
 import java.util.ArrayList;

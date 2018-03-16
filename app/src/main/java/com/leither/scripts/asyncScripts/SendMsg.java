@@ -8,7 +8,7 @@ import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgContent;
 import com.leither.operation.BasicAction;
-import com.leither.share.Global;
+import com.leither.common.Global;
 
 import org.json.JSONObject;
 

@@ -1,17 +1,11 @@
 package com.leither.scripts.syncScripts;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.entity.MsgSummary;
-import com.leither.share.Global;
+import com.leither.common.Global;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class GetConversationList extends SyncScript{
 

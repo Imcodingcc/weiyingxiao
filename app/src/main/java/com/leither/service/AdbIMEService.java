@@ -13,14 +13,14 @@ import android.view.inputmethod.InputConnection;
 
 import com.dylan_wang.capturescreen.R;
 import com.koushikdutta.async.http.WebSocket;
-import com.leither.share.Global;
+import com.leither.common.Global;
 
-public class AdbIME extends InputMethodService {
+public class AdbIMEService extends InputMethodService {
     private String IME_MESSAGE = "ADB_INPUT_TEXT";
     private String IME_CHARS = "ADB_INPUT_CHARS";
     private String IME_KEYCODE = "ADB_INPUT_CODE";
     private String IME_EDITORCODE = "ADB_EDITOR_CODE";
-    private static final String TAG = AdbIME.class.getName();
+    private static final String TAG = AdbIMEService.class.getName();
     private BroadcastReceiver mReceiver = null;
 
     @Override 

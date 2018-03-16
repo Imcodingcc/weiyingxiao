@@ -1,24 +1,16 @@
 package com.leither.common;
 
-import android.accessibilityservice.AccessibilityService;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.ImageFormat;
-import android.graphics.Rect;
-import android.graphics.YuvImage;
-import android.media.Image;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.leither.service.AccessService;
-import com.leither.share.Global;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -27,8 +19,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 import java.util.Enumeration;
 
 public class Tools {

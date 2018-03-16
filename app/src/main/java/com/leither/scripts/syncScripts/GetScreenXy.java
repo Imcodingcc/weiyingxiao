@@ -2,8 +2,7 @@ package com.leither.scripts.syncScripts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
-import com.leither.entity.MsgContent;
-import com.leither.share.Global;
+import com.leither.common.Global;
 
 import java.util.Map;
 
