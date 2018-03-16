@@ -11,12 +11,10 @@ public class Mass extends AsyncScript {
     private String[] step2 = new String[]{"发送", "设置", "清空此功能消息记录", "清空"};
     private String text;
     private AccessibilityService accessibilityService;
-    private AsyncHttpServerResponse response;
 
     public Mass(AsyncHttpServerResponse response, String text){
         super(response);
         this.text = text;
-        this.response = response;
         accessibilityService = Global.getDefault().getAccessibilityService();
     }
 
@@ -26,7 +24,7 @@ public class Mass extends AsyncScript {
         for (String s : step) {
             BasicAction.Click(s, 0);
         }
-        BasicAction.input(text, accessibilityService.getRootInActiveWindow());
+        BasicAction.findAndInput(text, accessibilityService.getRootInActiveWindow());
         for (String s : step2) {
             BasicAction.Click(s, 0);
         }

@@ -1,4 +1,4 @@
-package com.leither.httpServer;
+package com.leither.network;
 
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import java.util.concurrent.BlockingQueue;
@@ -23,7 +23,7 @@ public class ServerCreator {
     }
 
     public void setHttpListener(){
-        new HttpServer(server);
+        new AllHttpServer(server);
     }
 
     public static ServerCreator getDefault(){

@@ -1,5 +1,7 @@
 package com.leither.Task.asyncTask;
 
+import android.util.Log;
+
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.scripts.asyncScripts.AsyncScript;
 
@@ -14,8 +16,9 @@ public class TaskFactory {
         AsyncScript asyncScript;
         Task task = null;
         try {
+            Log.d("TaskFactory", "getTask: "+ type);
             Class<AsyncScript> clazz = (Class<AsyncScript>)
-                    Class.forName("com.leither.scripts.asyncScripts" + type);
+                    Class.forName("com.leither.scripts.asyncScripts." + type);
             Constructor<AsyncScript> constructor=
                     clazz.getConstructor(AsyncHttpServerResponse.class, String.class);
             asyncScript = constructor.newInstance(response, content);

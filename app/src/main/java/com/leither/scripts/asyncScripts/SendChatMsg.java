@@ -140,7 +140,7 @@ public class SendChatMsg extends AsyncScript {
         String msg = jsonObject.getString("msg");
         BasicAction.reOpenWeChat();
         BasicAction.Click("搜索", 0);
-        BasicAction.input(who
+        BasicAction.findAndInput(who
                         .substring(0
                                 , who.length() - 1),
                 Global.getDefault()
@@ -151,7 +151,7 @@ public class SendChatMsg extends AsyncScript {
         Thread.sleep(500);
         preSend(who);
         Thread.sleep(200);
-        BasicAction.input(msg, Global.getDefault().getAccessibilityService().getRootInActiveWindow());
+        BasicAction.findAndInput(msg, Global.getDefault().getAccessibilityService().getRootInActiveWindow());
         BasicAction.Click("发送", 0);
         Thread.sleep(500);
         BasicAction.back(2);

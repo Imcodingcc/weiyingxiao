@@ -12,7 +12,7 @@ public class ScriptFactory {
         SyncScript syncScript = null;
         try {
             Class<SyncScript> clazz = (Class<SyncScript>)
-                    Class.forName("com.leither.scripts.syncScripts" + type);
+                    Class.forName("com.leither.scripts.syncScripts." + type);
             Constructor<SyncScript> constructor=
                     clazz.getConstructor(AsyncHttpServerResponse.class, String.class);
             syncScript = constructor.newInstance(response, content);

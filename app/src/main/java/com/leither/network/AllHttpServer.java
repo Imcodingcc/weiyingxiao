@@ -1,8 +1,8 @@
-package com.leither.httpServer;
+package com.leither.network;
 
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
-import com.leither.Task.syncTask.RefreshListRunner;
+import com.leither.Task.syncTask.RefreshDetailChatMsgRunner;
 import com.leither.Task.syncTask.ScriptFactory;
 import com.leither.Task.syncTask.SyncTaskRunner;
 import com.leither.Task.asyncTask.Task;
@@ -10,7 +10,7 @@ import com.leither.Task.asyncTask.TaskFactory;
 import com.leither.Task.asyncTask.AsyncTaskRunner;
 import com.leither.scripts.syncScripts.SyncScript;
 
-public class HttpServer implements Server {
+public class AllHttpServer implements Server {
     private String[] asyncHttpInterface = new String[]{
             "Mass",
             "AddFriend",
@@ -29,20 +29,20 @@ public class HttpServer implements Server {
             "GetAddOneStatus"};
 
     private AsyncTaskRunner asyncTaskRunner;
-    private SyncTaskRunner syncAndReturnRunner;
+    private SyncTaskRunner syncTaskRunner;
 
-    HttpServer(AsyncHttpServer asyncHttpServer) {
+    AllHttpServer(AsyncHttpServer asyncHttpServer) {
         setListener(asyncHttpServer);
         startTaskRunner();
     }
 
     private void startTaskRunner() {
         new SendIpTimerRunner();
-        syncAndReturnRunner = new SyncTaskRunner();
+        syncTaskRunner = new SyncTaskRunner();
         asyncTaskRunner = new AsyncTaskRunner("asyncTaskRunner");
+        syncTaskRunner.start();
         asyncTaskRunner.start();
-        syncAndReturnRunner.start();
-        new RefreshListRunner(asyncTaskRunner).start();
+        new RefreshDetailChatMsgRunner(asyncTaskRunner).start();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class HttpServer implements Server {
                 setHeader(response);
                 String param = request.getBody().toString();
                 SyncScript syncScript = ScriptFactory.getTask(sync, response, param);
-                syncAndReturnRunner.addScript(syncScript);
+                syncTaskRunner.addScript(syncScript);
             });
         }
     }

@@ -1,4 +1,4 @@
-package com.leither.httpServer;
+package com.leither.network;
 
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.leither.common.Tools;
@@ -10,7 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SendIpTimerRunner {
-    SendIpTimerRunner(){
+    SendIpTimerRunner() {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {

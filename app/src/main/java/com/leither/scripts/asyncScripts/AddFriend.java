@@ -17,18 +17,15 @@ public class AddFriend extends AsyncScript{
     private String remarks;
     private String tel;
     private String requestFirst;
-    private AsyncHttpServerResponse response;
 
     public AddFriend(AsyncHttpServerResponse response, String param){
-        super(null);
-        response.send(returnValue("0"));
+        super(response);
         try {
             Log.d(TAG, "AddFriend: init " + param);
             JSONObject jsonObject = new JSONObject(param);
             remarks = jsonObject.getString("remarks");
             tel = jsonObject.getString("tel");
             requestFirst = jsonObject.getString("requestFirst");
-            this.response =response;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -42,7 +39,7 @@ public class AddFriend extends AsyncScript{
         }
         Global.getDefault().getAddOneStatus().put(tel, "1");
         BasicAction.RootClick("微信号/QQ号/手机号");
-        BasicAction.input(tel, g.getAccessibilityService().getRootInActiveWindow());
+        BasicAction.findAndInput(tel, g.getAccessibilityService().getRootInActiveWindow());
         for (String step : steps2) {
             BasicAction.Click(step, 0);
             Thread.sleep(1000);

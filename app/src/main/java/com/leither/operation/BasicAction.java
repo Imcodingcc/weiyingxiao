@@ -80,7 +80,7 @@ public class BasicAction {
         }
     }
 
-    public static boolean input(String content, AccessibilityNodeInfo rootNode) throws Exception{
+    public static boolean findAndInput(String content, AccessibilityNodeInfo rootNode) throws Exception{
         int count = rootNode.getChildCount();
         for (int i = 0; i < count; i++) {
             AccessibilityNodeInfo nodeInfo = rootNode.getChild(i);
@@ -99,7 +99,7 @@ public class BasicAction {
                 nodeInfo.performAction(AccessibilityNodeInfo.ACTION_PASTE);
                 return true;
             }
-            if(input(content, nodeInfo)){
+            if(findAndInput(content, nodeInfo)){
                 Thread.sleep(500);
                return true;
             }

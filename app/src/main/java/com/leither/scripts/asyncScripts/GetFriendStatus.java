@@ -8,12 +8,10 @@ import com.leither.common.Global;
 
 public class GetFriendStatus extends AsyncScript {
 
-    public AsyncHttpServerResponse response;
     private String tel;
     private AccessibilityService service = Global.getDefault().getAccessibilityService();
     public GetFriendStatus(AsyncHttpServerResponse response, String tel){
         super(response);
-        this.response = response;
         this.tel = tel;
     }
 
@@ -21,7 +19,7 @@ public class GetFriendStatus extends AsyncScript {
     public String start() throws Exception {
         BasicAction.reOpenWeChat();
         BasicAction.Click("搜索", 0);
-        BasicAction.input(tel, service.getRootInActiveWindow());
+        BasicAction.findAndInput(tel, service.getRootInActiveWindow());
         Thread.sleep(1000);
         boolean isFriend = service
                 .getRootInActiveWindow()
