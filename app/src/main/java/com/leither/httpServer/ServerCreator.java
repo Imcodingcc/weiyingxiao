@@ -19,7 +19,7 @@ public class ServerCreator {
 
     public void setWsListener(BlockingQueue<byte[]> dataList){
         new SendScreenshotWebSocketServer(dataList, server);
-        new InputWebSocketServer(server);
+        new ReceiveInputWebSocketServer(server);
     }
 
     public void setHttpListener(){

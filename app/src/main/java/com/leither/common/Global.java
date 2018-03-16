@@ -40,14 +40,14 @@ public class Global {
 
     private String weChatId = "";
 
-    private List<WebSocket> webSocketList = new ArrayList<>();
+    private List<WebSocket> inputWebSocket = new ArrayList<>();
 
-    public List<WebSocket> getWebSocketList() {
-        return webSocketList;
+    public List<WebSocket> getInputWebSocket() {
+        return inputWebSocket;
     }
 
-    public void setWebSocketList(List<WebSocket> webSocketList) {
-        this.webSocketList = webSocketList;
+    public void setInputWebSocket(List<WebSocket> inputWebSocket) {
+        this.inputWebSocket = inputWebSocket;
     }
 
     private Map<String, String> addOneStatus = new HashMap<>();

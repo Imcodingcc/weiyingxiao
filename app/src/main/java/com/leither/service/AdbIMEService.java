@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
-import com.dylan_wang.capturescreen.R;
 import com.koushikdutta.async.http.WebSocket;
+import com.leither.R;
 import com.leither.common.Global;
 
 public class AdbIMEService extends InputMethodService {
@@ -43,7 +43,7 @@ public class AdbIMEService extends InputMethodService {
 	public void onStartInput(EditorInfo attribute, boolean restarting) {
 		super.onStartInput(attribute, restarting);
 		Log.d(TAG, "onStartInput: ");
-        for (WebSocket webSocket : Global.getDefault().getWebSocketList()) {
+        for (WebSocket webSocket : Global.getDefault().getInputWebSocket()) {
             webSocket.send("inputMethodOn");
         }
     }

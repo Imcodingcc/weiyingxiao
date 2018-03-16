@@ -10,10 +10,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dylan_wang.capturescreen.R;
+import com.leither.R;
 import com.leither.common.Tools;
 import com.leither.operation.RootedAction;
 import com.leither.common.Global;

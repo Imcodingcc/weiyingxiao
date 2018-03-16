@@ -1,6 +1,7 @@
 package com.leither.common;
 
 import android.accessibilityservice.AccessibilityService;
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ public class ShotApplication extends Application {
     private int resultCode;
     private Intent intent;
     private MediaProjectionManager mMediaProjectionManager;
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
 
     @Override
