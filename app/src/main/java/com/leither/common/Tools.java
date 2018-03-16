@@ -174,4 +174,16 @@ public class Tools {
 
         return phrase.toString();
     }
+
+    public static boolean isAppInstalled(Context context) {
+        PackageManager pm = context.getPackageManager();
+        boolean installed;
+        try {
+            pm.getPackageInfo("com.tencent.mm", PackageManager.GET_ACTIVITIES);
+            installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            installed = false;
+        }
+        return installed;
+    }
 }

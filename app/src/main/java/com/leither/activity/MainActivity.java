@@ -67,20 +67,11 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    @SuppressLint("SetTextI18n")
     private void init(){
         Toast.makeText(this, "请不要操作,直到等待初始化完成", Toast.LENGTH_SHORT).show();
         Global.getDefault().setRootedAction(new RootedAction());
         getMediaProject();
         startService();
-        new Thread(()->{
-            try {
-                String ipAddress = Tools.getLocalHostLANAddress().getHostName();
-                runOnUiThread(()-> ((TextView)findViewById(R.id.ipAddress)).setText("IP地址: " + ipAddress));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
     private void startService(){
@@ -116,23 +107,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "请先打开辅助功能, 再重启app", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(!isAppInstalled(this)){
+        if(!Tools.isAppInstalled(this)){
             Toast.makeText(this, "请先安装微信APP", Toast.LENGTH_SHORT).show();
             return false;
         }
         return Tools.isRoot();
-    }
-
-    private boolean isAppInstalled(Context context) {
-        //PackageManager pm = context.getPackageManager();
-        //boolean installed;
-        //try {
-        //    pm.getPackageInfo("com.tencent.mm", PackageManager.GET_ACTIVITIES);
-        //    installed = true;
-        //} catch (PackageManager.NameNotFoundException e) {
-        //    installed = false;
-        //}
-        return true;
-        //return installed;
     }
 }
