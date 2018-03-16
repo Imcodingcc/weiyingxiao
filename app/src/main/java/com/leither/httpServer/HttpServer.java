@@ -13,16 +13,15 @@ import com.leither.Task.asyncTask.TaskFactory;
 import com.leither.Task.asyncTask.AsyncTaskRunner;
 import com.leither.common.Tools;
 import com.leither.scripts.asyncScripts.RefreshConversations;
-import com.leither.scripts.syncScripts.SyncScript;
 import com.leither.scripts.asyncScripts.WeChatId;
+import com.leither.scripts.syncScripts.SyncScript;
 import com.leither.share.Global;
+import com.leither.share.ShotApplication;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class HttpServer implements Server{
+public class HttpServer implements Server {
     private static final String TAG = "HttpServer";
 
     private String[] asyncHttpInterface = new String[]{
@@ -46,15 +45,15 @@ public class HttpServer implements Server{
     private SyncTaskRunner syncAndReturnRunner;
     private RefreshListRunner refreshListRunner;
 
-    HttpServer(AsyncHttpServer asyncHttpServer){
-        new Thread(()->{
+    HttpServer(AsyncHttpServer asyncHttpServer) {
+        new Thread(() -> {
             sendIp();
-            if(!startThread()) return;
+            if (!startThread()) return;
             setListener(asyncHttpServer);
         }).start();
     }
 
-    private boolean startThread(){
+    private boolean startThread() {
         asyncTaskRunner = new AsyncTaskRunner("asyncTaskRunner");
         syncAndReturnRunner = new SyncTaskRunner();
         asyncTaskRunner.start();
@@ -67,49 +66,50 @@ public class HttpServer implements Server{
             e.printStackTrace();
             return false;
         }
-        //refreshListRunner = new RefreshListRunner(asyncTaskRunner);
-        //refreshListRunner.start();
+        refreshListRunner = new RefreshListRunner(asyncTaskRunner);
+        refreshListRunner.start();
         return true;
     }
 
-    private List<String> scanIpList() throws Exception {
-        InetAddress inetAddress = Tools.getLocalHostLANAddress();
-        String ip = inetAddress.getHostName();
-        String[] bit = ip.split("\\.");
-        Log.d(TAG, "scanIpList: " + Arrays.toString(bit));
+    private List<String> discoverIp() throws Exception {
+        String[] hostName = Tools
+                .getLocalHostLANAddress()
+                .getHostName()
+                .split("\\.");
         List<String> reachableIp = new ArrayList<>();
         for (int i = 0; i < 255; i++) {
-            String isReachableIp = bit[0] + "." + bit[1] + "." +bit[2] + "." + i;
-            if(Tools.isHostReachable(isReachableIp, 10)){
+            String isReachableIp = hostName[0]
+                    + "." +
+                    hostName[1]
+                    + "." +
+                    hostName[2] + "." + i;
+            if (Tools.isHostReachable(isReachableIp, 20)) {
                 reachableIp.add(isReachableIp);
             }
         }
         return reachableIp;
     }
 
-    private String connServer(List<String> list){
+    private String discoverReachablePortIp(List<String> list) {
         if (list == null) {
             return null;
         }
         for (String s : list) {
-            Log.d(TAG, "connServer: " + s);
-            if(Tools.isHostConnectAble(s, 5758)){
+            Log.d(TAG, "discoverReachablePortIp: " + s);
+            if (Tools.isHostConnectAble(s, 5758)) {
                 return s;
-            };
+            }
         }
         return null;
     }
 
-    private void sendIp(){
+    private void sendIp() {
         try {
-            List<String> list = scanIpList();
-            String s = connServer(list);
-            if (s == null) {
-               return;
-            }
-            AsyncHttpClient asyncHttpClient = AsyncHttpClient.getDefaultInstance();
-            String uri = "http://" + s + ":5758" + "/phoneIp?ip=" + Tools.getLocalHostLANAddress().getHostName();
-            asyncHttpClient.execute(uri, null).get().message();
+            AsyncHttpClient.getDefaultInstance()
+                    .execute("http://" + discoverReachablePortIp(discoverIp()) + ":5758"
+                            + "/ipaddr?ip=" + Tools.getLocalHostLANAddress().getHostName()
+                            + "&mac=" + Tools.getWifiMac(ShotApplication.getContext())
+                            + "&model=" + Tools.getDeviceName(), null).get().message();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,7 +120,7 @@ public class HttpServer implements Server{
         for (final String async : asyncHttpInterface) {
             server.post("/" + async, (request, response) -> {
                 setHeader(response);
-                String param= request.getBody().toString();
+                String param = request.getBody().toString();
                 Task task = TaskFactory.getTask(async, response, param);
                 asyncTaskRunner.addTask(task);
             });
@@ -136,7 +136,7 @@ public class HttpServer implements Server{
         }
     }
 
-    private void setHeader(AsyncHttpServerResponse response){
+    private void setHeader(AsyncHttpServerResponse response) {
         response.getHeaders().add("Access-Control-Allow-Origin", "*");
         response.getHeaders().add("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
         response.getHeaders().add("Access-Control-Allow-Headers", "Content-Type");

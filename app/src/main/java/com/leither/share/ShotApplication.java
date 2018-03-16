@@ -2,6 +2,7 @@ package com.leither.share;
 
 import android.accessibilityservice.AccessibilityService;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.media.projection.MediaProjectionManager;
 
@@ -9,6 +10,13 @@ public class ShotApplication extends Application {
     private int resultCode;
     private Intent intent;
     private MediaProjectionManager mMediaProjectionManager;
+    private static Context context;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ShotApplication.context = getApplicationContext();
+    }
 
     public AccessibilityService getAccessibilityService() {
         return accessibilityService;
@@ -42,5 +50,9 @@ public class ShotApplication extends Application {
 
     public void setMediaProjectionManager(MediaProjectionManager mMediaProjectionManager){
         this.mMediaProjectionManager = mMediaProjectionManager;
+    }
+
+    public static Context getContext(){
+        return context;
     }
 }
