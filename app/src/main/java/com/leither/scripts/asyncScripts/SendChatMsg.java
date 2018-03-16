@@ -18,11 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SendMsg extends AsyncScript {
+public class SendChatMsg extends AsyncScript {
 
-    private static final String TAG = SendMsg.class.getName();
+    private static final String TAG = SendChatMsg.class.getName();
     private String param;
-    public SendMsg(AsyncHttpServerResponse response, String param){
+    public SendChatMsg(AsyncHttpServerResponse response, String param){
         super(response);
         this.param = param;
     }

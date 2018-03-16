@@ -3,13 +3,13 @@ package com.leither.httpServer;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import java.util.concurrent.BlockingQueue;
 
-public class SocketCreator {
+public class ServerCreator {
     private AsyncHttpServer server = new AsyncHttpServer();
-    private static SocketCreator socketCreator = null;
+    private static ServerCreator socketCreator = null;
 
 
 
-    private SocketCreator(){
+    private ServerCreator(){
         setListener();
     }
 
@@ -18,17 +18,17 @@ public class SocketCreator {
     }
 
     public void setWsListener(BlockingQueue<byte[]> dataList){
-        new WebSocketServer(dataList, server);
-        new InputServer(server);
+        new SendScreenshotWebSocketServer(dataList, server);
+        new InputWebSocketServer(server);
     }
 
     public void setHttpListener(){
         new HttpServer(server);
     }
 
-    public static SocketCreator getDefault(){
+    public static ServerCreator getDefault(){
         if(socketCreator == null){
-            socketCreator = new SocketCreator();
+            socketCreator = new ServerCreator();
         }
         return socketCreator;
     }

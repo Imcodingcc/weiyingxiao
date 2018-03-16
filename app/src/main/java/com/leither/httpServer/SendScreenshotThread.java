@@ -8,12 +8,12 @@ import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class SendJpgThread extends Thread{
+public class SendScreenshotThread extends Thread{
 
     private WebSocket webSocket;
     private BlockingQueue<Boolean> sendList;
     private BlockingQueue<byte[]> dataList;
-    SendJpgThread(WebSocket webSocket, BlockingQueue<Boolean> sendList, BlockingQueue<byte[]> dataList){
+    SendScreenshotThread(WebSocket webSocket, BlockingQueue<Boolean> sendList, BlockingQueue<byte[]> dataList){
         this.webSocket = webSocket;
         this.sendList = sendList;
         this.dataList = dataList;

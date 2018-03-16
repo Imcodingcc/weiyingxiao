@@ -10,11 +10,11 @@ import org.json.JSONObject;
 
 import cn.leither.touchlibiary.Nexus5;
 
-public class InputServer implements Server{
-    private static final String TAG = InputServer.class.getName();
+public class InputWebSocketServer implements Server{
+    private static final String TAG = InputWebSocketServer.class.getName();
     private Nexus5 nexus5 = new Nexus5();
 
-    InputServer(AsyncHttpServer asyncHttpServer){
+    InputWebSocketServer(AsyncHttpServer asyncHttpServer){
         setListener(asyncHttpServer);
         nexus5.switchIme();
     }

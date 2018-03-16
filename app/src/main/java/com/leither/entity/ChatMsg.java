@@ -1,9 +1,5 @@
 package com.leither.entity;
 
-/**
- * Created by lvqiang on 18-1-3.
- */
-
 public class ChatMsg {
     private String name;
     private String msg;

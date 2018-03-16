@@ -2,21 +2,18 @@ package com.leither.httpServer;
 
 import android.util.Log;
 
-import com.koushikdutta.async.callback.CompletedCallback;
-import com.koushikdutta.async.http.WebSocket;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
-import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
-public class WebSocketServer implements Server{
+public class SendScreenshotWebSocketServer implements Server{
     private BlockingQueue<byte[]> dataList;
     private Map<String, BlockingQueue<Boolean>> sendMap = new HashMap<>();
 
-    WebSocketServer(BlockingQueue<byte[]> dataList, AsyncHttpServer asyncHttpServer){
+    SendScreenshotWebSocketServer(BlockingQueue<byte[]> dataList, AsyncHttpServer asyncHttpServer){
         this.dataList = dataList;
         setListener(asyncHttpServer);
     }
@@ -28,7 +25,7 @@ public class WebSocketServer implements Server{
             sendList.offer(true);
             sendList.offer(true);
             sendMap.put(webSocket.toString(), sendList);
-            new SendJpgThread(webSocket, sendList, dataList).start();
+            new SendScreenshotThread(webSocket, sendList, dataList).start();
 
             webSocket.setClosedCallback(ex -> {
                     if (ex != null) Log.e("WebSocket", "Error");

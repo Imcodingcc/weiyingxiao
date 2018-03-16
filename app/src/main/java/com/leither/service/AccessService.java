@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
-import com.leither.httpServer.SocketCreator;
+import com.leither.httpServer.ServerCreator;
 import com.leither.common.Global;
 import com.leither.common.ShotApplication;
 import com.leither.weChatVersion.WeChatResourceId;
@@ -22,7 +22,7 @@ public class AccessService extends AccessibilityService{
         Global.getDefault().setWeChatResourceId(new WeChatResourceId("6.5.23"));
         ClipboardManager clipboardManager = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         Global.getDefault().setClipboardManager(clipboardManager);
-        SocketCreator.getDefault().setHttpListener();
+        ServerCreator.getDefault().setHttpListener();
     }
 
     @Override

@@ -18,7 +18,7 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.leither.common.Tools;
-import com.leither.httpServer.SocketCreator;
+import com.leither.httpServer.ServerCreator;
 import com.leither.common.Global;
 import com.leither.common.ShotApplication;
 
@@ -46,7 +46,7 @@ public class ScreenshotService extends Service
     public void onCreate()
     {
         super.onCreate();
-        SocketCreator.getDefault().setWsListener(jpgQueue);
+        ServerCreator.getDefault().setWsListener(jpgQueue);
         createSurface();
         setXy();
         startOnUIThread();

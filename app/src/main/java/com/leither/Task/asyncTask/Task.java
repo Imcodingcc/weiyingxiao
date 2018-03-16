@@ -22,12 +22,8 @@ public class Task implements Comparable<Task>{
         this.id = id;
     }
 
-    public AsyncScript getAsyncScript() {
+    AsyncScript getAsyncScript() {
         return asyncScript;
-    }
-
-    public void setAsyncScript(AsyncScript asyncScript) {
-        this.asyncScript = asyncScript;
     }
 
     private AsyncScript asyncScript;

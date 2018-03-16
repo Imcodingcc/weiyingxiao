@@ -24,11 +24,11 @@ public abstract class AsyncScript {
         }
     }
 
-    protected String returnValue(String obj){
+    String returnValue(String obj){
         return  "{\"code\": 0, \"msg\": "+ obj +"}";
     }
 
-    protected String errorValue(String obj){
+    private String errorValue(String obj){
         return  "{\"code\": -1, \"msg\": "+ obj +"}";
     }
 }

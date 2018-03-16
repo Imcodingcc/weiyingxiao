@@ -7,8 +7,7 @@ import com.leither.scripts.asyncScripts.AddFriend;
 import com.leither.scripts.asyncScripts.GetFriendStatus;
 import com.leither.scripts.asyncScripts.Mass;
 import com.leither.scripts.asyncScripts.AsyncScript;
-import com.leither.scripts.asyncScripts.SendMsg;
-import com.leither.scripts.asyncScripts.TouchTest;
+import com.leither.scripts.asyncScripts.SendChatMsg;
 
 import java.util.Date;
 
@@ -25,16 +24,12 @@ public class TaskFactory {
                 asyncScript = new AddFriend(response, content);
                 task = new Task(1, new Date().getTime(), asyncScript);
                 break;
-            case "SendMsg":
-                asyncScript = new SendMsg(response, content);
+            case "SendChatMsg":
+                asyncScript = new SendChatMsg(response, content);
                 task = new Task(1, new Date().getTime(), asyncScript);
                 break;
             case "GetFriendStatus":
                 asyncScript = new GetFriendStatus(response, content);
-                task = new Task(-1, new Date().getTime(), asyncScript);
-                break;
-            case "TouchTest":
-                asyncScript = new TouchTest(response, content);
                 task = new Task(-1, new Date().getTime(), asyncScript);
                 break;
             default:

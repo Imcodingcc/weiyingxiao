@@ -17,7 +17,7 @@ public class HttpServer implements Server {
             "BatchAdd",
             "GetFriendStatus",
             "TouchTest",
-            "SendMsg"};
+            "SendChatMsg"};
 
     private String[] syncAndReturnInterface = new String[]{
             "GetConversationList",
@@ -37,7 +37,7 @@ public class HttpServer implements Server {
     }
 
     private void startTaskRunner() {
-        new SendIpRunner();
+        new SendIpTimerRunner();
         syncAndReturnRunner = new SyncTaskRunner();
         asyncTaskRunner = new AsyncTaskRunner("asyncTaskRunner");
         asyncTaskRunner.start();

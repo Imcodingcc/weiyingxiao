@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SendIpRunner {
-    SendIpRunner(){
+public class SendIpTimerRunner {
+    SendIpTimerRunner(){
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
