@@ -125,7 +125,7 @@
     <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-annotations:2.0.1@jar" level="project" />
     <orderEntry type="library" name="org.greenrobot:eventbus:3.1.1@jar" level="project" />
     <orderEntry type="library" name="com.android.support:appcompat-v7-22.2.1" level="project" />
-    <orderEntry type="module" module-name="touchlibiary" />
+    <orderEntry type="module" module-name="touch" />
     <orderEntry type="module" module-name="AndroidAsync" />
   </component>
 </module>

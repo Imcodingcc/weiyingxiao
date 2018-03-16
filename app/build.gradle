@@ -39,5 +39,5 @@ dependencies {
     //compile 'de.mrmaffen:libvlc-android:2.1.12@aar'
     compile 'org.lz4:lz4-java:1.4.0'
     compile project(path: ':AndroidAsync')
-    compile project(path: ':touchlibiary')
+    compile project(path: ':touch')
 }

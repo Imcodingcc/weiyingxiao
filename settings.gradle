@@ -1,1 +1,1 @@
-include ':app', ':AndroidAsync', ':touchlibiary'
+include ':app', ':AndroidAsync', ':touch'
