@@ -1,42 +1,27 @@
 package com.leither.Task.syncTask;
 
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
-import com.leither.scripts.syncScripts.GetAddOneStatus;
-import com.leither.scripts.syncScripts.GetAllConversation;
-import com.leither.scripts.syncScripts.GetOneChatRecord;
-import com.leither.scripts.syncScripts.GetRecentConversation;
-import com.leither.scripts.syncScripts.GetConversationList;
-import com.leither.scripts.syncScripts.GetScreenXy;
-import com.leither.scripts.syncScripts.GetWeChatId;
 import com.leither.scripts.syncScripts.SyncScript;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+@SuppressWarnings("unchecked")
 public class ScriptFactory {
     public static SyncScript getTask(String type, AsyncHttpServerResponse response, String content){
-        SyncScript syncScript;
-        switch (type){
-            case "GetConversationList":
-                syncScript = new GetConversationList(response);
-                break;
-            case "GetWeChatId":
-                syncScript = new GetWeChatId(response);
-                break;
-            case "GetRecentConversation":
-                syncScript = new GetRecentConversation(response);
-                break;
-            case "GetAllConversation":
-                syncScript = new GetAllConversation(response);
-                break;
-            case "GetOneChatRecord":
-                syncScript = new GetOneChatRecord(response, content);
-                break;
-            case "GetAddOneStatus":
-                syncScript = new GetAddOneStatus(response, content);
-                break;
-            case "GetScreenXy":
-                syncScript = new GetScreenXy(response);
-                break;
-            default:
-                syncScript = new SyncScript(response);
+        SyncScript syncScript = null;
+        try {
+            Class<SyncScript> clazz = (Class<SyncScript>)
+                    Class.forName("com.leither.scripts.syncScripts" + type);
+            Constructor<SyncScript> constructor=
+                    clazz.getConstructor(AsyncHttpServerResponse.class, String.class);
+            syncScript = constructor.newInstance(response, content);
+        } catch (ClassNotFoundException
+                | NoSuchMethodException
+                | IllegalAccessException
+                | InvocationTargetException
+                | InstantiationException e) {
+            e.printStackTrace();
         }
         return syncScript;
     }

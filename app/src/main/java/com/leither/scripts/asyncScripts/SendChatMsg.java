@@ -82,7 +82,7 @@ public class SendChatMsg extends AsyncScript {
             Rect rect = new Rect();
             node.get(i).getBoundsInScreen(rect);
             if(rect.left < 500){
-                Global.getDefault().getRootedAction().longPress(rect);
+                Global.getDefault().getNexus5().longPress(rect);
                 List<AccessibilityNodeInfo> copy =
                         Global.getDefault().getAccessibilityService()
                                 .getRootInActiveWindow()
@@ -92,7 +92,7 @@ public class SendChatMsg extends AsyncScript {
                 }
                 Rect rect1 = new Rect();
                 copy.get(0).getBoundsInScreen(rect1);
-                Global.getDefault().getRootedAction().tap(rect1);
+                Global.getDefault().getNexus5().tap(rect1);
                 if(Global.getDefault().getClipboardManager().getText().toString().equals(chatMsg.getMsg())){
                     screenIndex = i;
                 }
@@ -110,7 +110,7 @@ public class SendChatMsg extends AsyncScript {
         for (int i = screenIndex;i < node.size(); i++) {
             Rect rect = new Rect();
             node.get(i).getBoundsInScreen(rect);
-            Global.getDefault().getRootedAction().longPress(rect);
+            Global.getDefault().getNexus5().longPress(rect);
             List<AccessibilityNodeInfo> copy =
                     Global.getDefault().getAccessibilityService()
                             .getRootInActiveWindow()
@@ -120,7 +120,7 @@ public class SendChatMsg extends AsyncScript {
             }
             Rect rect1 = new Rect();
             copy.get(0).getBoundsInScreen(rect1);
-            Global.getDefault().getRootedAction().tap(rect1);
+            Global.getDefault().getNexus5().tap(rect1);
             ChatMsg chatMsg1;
             if(rect.left > 400){
                 chatMsg1 = new ChatMsg("我", Global.getDefault().getClipboardManager().getText().toString());

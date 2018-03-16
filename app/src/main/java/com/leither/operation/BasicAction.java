@@ -59,7 +59,7 @@ public class BasicAction {
         if(list.size() == 0) throw new NodeNullException(text + " node not found");
         Rect rect = new Rect();
         list.get(0).getBoundsInScreen(rect);
-        Global.getDefault().getRootedAction().tap(rect);
+        Global.getDefault().getNexus5().tap(rect);
         Thread.sleep(1000);
     }
 

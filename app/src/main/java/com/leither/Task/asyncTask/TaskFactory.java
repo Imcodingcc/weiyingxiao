@@ -1,39 +1,31 @@
 package com.leither.Task.asyncTask;
 
-import android.util.Log;
-
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
-import com.leither.scripts.asyncScripts.AddFriend;
-import com.leither.scripts.asyncScripts.GetFriendStatus;
-import com.leither.scripts.asyncScripts.Mass;
 import com.leither.scripts.asyncScripts.AsyncScript;
-import com.leither.scripts.asyncScripts.SendChatMsg;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
+
+@SuppressWarnings("unchecked")
 public class TaskFactory {
     public static Task getTask(String type, AsyncHttpServerResponse response,  String content){
         AsyncScript asyncScript;
         Task task = null;
-        switch (type){
-            case "Mass":
-                asyncScript = new Mass(response, content);
-                task = new Task(1, new Date().getTime(), asyncScript);
-                break;
-            case "AddFriend":
-                asyncScript = new AddFriend(response, content);
-                task = new Task(1, new Date().getTime(), asyncScript);
-                break;
-            case "SendChatMsg":
-                asyncScript = new SendChatMsg(response, content);
-                task = new Task(1, new Date().getTime(), asyncScript);
-                break;
-            case "GetFriendStatus":
-                asyncScript = new GetFriendStatus(response, content);
-                task = new Task(-1, new Date().getTime(), asyncScript);
-                break;
-            default:
-                Log.d("TaskFactory", type + "No such task");
+        try {
+            Class<AsyncScript> clazz = (Class<AsyncScript>)
+                    Class.forName("com.leither.scripts.asyncScripts" + type);
+            Constructor<AsyncScript> constructor=
+                    clazz.getConstructor(AsyncHttpServerResponse.class, String.class);
+            asyncScript = constructor.newInstance(response, content);
+            task = new Task(1, new Date().getTime(), asyncScript);
+        } catch (ClassNotFoundException
+                | NoSuchMethodException
+                | IllegalAccessException
+                | InvocationTargetException
+                | InstantiationException e) {
+            e.printStackTrace();
         }
         return task;
     }

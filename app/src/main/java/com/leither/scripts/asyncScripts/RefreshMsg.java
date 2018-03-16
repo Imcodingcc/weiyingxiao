@@ -79,7 +79,7 @@ public class RefreshMsg extends AsyncScript {
                 }
                 Rect rect0 = new Rect();
                 oneMsg.getBoundsInScreen(rect0);
-                Global.getDefault().getRootedAction().tap(rect0);
+                Global.getDefault().getNexus5().tap(rect0);
                 Thread.sleep(500);
                 List<AccessibilityNodeInfo> contents =
                         accessibilityService
@@ -99,7 +99,7 @@ public class RefreshMsg extends AsyncScript {
                         break;
                     }
                     contents.get(index).getBoundsInScreen(rect1);
-                    Global.getDefault().getRootedAction().longPress(rect1);
+                    Global.getDefault().getNexus5().longPress(rect1);
                     List<AccessibilityNodeInfo> copy =
                             accessibilityService
                                     .getRootInActiveWindow()
@@ -109,7 +109,7 @@ public class RefreshMsg extends AsyncScript {
                     }
                     Rect rect = new Rect();
                     copy.get(0).getBoundsInScreen(rect);
-                    Global.getDefault().getRootedAction().tap(rect);
+                    Global.getDefault().getNexus5().tap(rect);
                     String text = Global.getDefault().getClipboardManager().getText().toString();
                     texts.add(new ChatMsg(name, text));
                 }

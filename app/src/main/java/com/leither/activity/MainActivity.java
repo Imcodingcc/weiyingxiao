@@ -14,8 +14,6 @@ import android.widget.Toast;
 
 import com.leither.R;
 import com.leither.common.Tools;
-import com.leither.operation.RootedAction;
-import com.leither.common.Global;
 import com.leither.common.ShotApplication;
 import com.leither.service.AccessService;
 import com.leither.service.ScreenshotService;
@@ -68,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void init(){
         Toast.makeText(this, "请不要操作,直到等待初始化完成", Toast.LENGTH_SHORT).show();
-        Global.getDefault().setRootedAction(new RootedAction());
         getMediaProject();
         startService();
     }

@@ -8,7 +8,6 @@ import com.koushikdutta.async.http.WebSocket;
 import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgContent;
 import com.leither.entity.MsgSummary;
-import com.leither.operation.RootedAction;
 import com.leither.weChatVersion.WeChatResourceId;
 
 import java.util.ArrayList;
@@ -107,16 +106,6 @@ public class Global {
     public void setWeChatId(String weChatId) {
         this.weChatId = weChatId;
     }
-
-    public RootedAction getRootedAction() {
-        return rootedAction;
-    }
-
-    public void setRootedAction(RootedAction rootedAction) {
-        this.rootedAction = rootedAction;
-    }
-
-    private RootedAction rootedAction;
 
     public AccessibilityService getAccessibilityService() {
         return accessibilityService;
