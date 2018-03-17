@@ -1,6 +1,7 @@
 package com.leither.network;
 
 import com.koushikdutta.async.http.AsyncHttpClient;
+import com.leither.common.Global;
 import com.leither.common.Tools;
 import com.leither.common.ShotApplication;
 
@@ -9,13 +10,14 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SendIpTimerRunner {
+class SendIpTimerRunner {
     SendIpTimerRunner() {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 try {
-                    sendIp();
+                    upIpToGlobal();
+                    sendPhoneInfo();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -24,7 +26,7 @@ public class SendIpTimerRunner {
     }
 
 
-    private List<String> discoverIp() throws Exception {
+    private List<String> discoverLanIps() throws Exception {
         String[] hostName = Tools
                 .getLocalHostLANAddress()
                 .getHostName()
@@ -43,7 +45,7 @@ public class SendIpTimerRunner {
         return reachableIp;
     }
 
-    private String discoverReachablePortIp(List<String> list) {
+    private String discoverLanBoxIp(List<String> list) {
         if (list == null) {
             return null;
         }
@@ -55,11 +57,15 @@ public class SendIpTimerRunner {
         return null;
     }
 
-    private void sendIp() throws Exception {
+    private void sendPhoneInfo() throws Exception {
         AsyncHttpClient.getDefaultInstance()
-                .execute("http://" + discoverReachablePortIp(discoverIp()) + ":5758"
+                .execute("http://" + Global.getDefault().getLanBoxIp() + ":5758"
                         + "/ipaddr?ip=" + Tools.getLocalHostLANAddress().getHostName()
                         + "&mac=" + Tools.getWifiMac(ShotApplication.getContext())
                         + "&model=" + Tools.getDeviceName(), null).get().message();
+    }
+
+    private void upIpToGlobal() throws Exception {
+        Global.getDefault().setLanBoxIp(discoverLanBoxIp(discoverLanIps()));
     }
 }

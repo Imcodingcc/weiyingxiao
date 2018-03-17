@@ -22,9 +22,12 @@ public class Global {
 
     private static Global global = null;
 
+    private String lanBoxIp;
+
     private Nexus5 nexus5 = new Nexus5();
 
     private WeChatResourceId weChatResourceId;
+
 
     private ClipboardManager clipboardManager;
 
@@ -39,6 +42,14 @@ public class Global {
     private Map<String, MsgSummary> ConversationList = new HashMap<>();
 
     private Map<String, MsgContent> recentConversation = new HashMap<>();
+
+    public String getLanBoxIp() {
+        return lanBoxIp;
+    }
+
+    public void setLanBoxIp(String lanBoxIp) {
+        this.lanBoxIp = lanBoxIp;
+    }
 
     public Map<String, Integer> getXy() {
         return xy;

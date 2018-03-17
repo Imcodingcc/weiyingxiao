@@ -6,6 +6,7 @@ import android.service.notification.StatusBarNotification;
 
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.WebSocket;
+import com.leither.common.Global;
 import com.leither.common.ShotApplication;
 import com.leither.common.Tools;
 
@@ -16,13 +17,15 @@ public class NotificationCaptureService extends NotificationListenerService {
     private static WebSocket ws;
 
     static {
-        AsyncHttpClient.getDefaultInstance().websocket("", null, (ex, webSocket) -> {
-            if (ex != null) {
-                ex.printStackTrace();
-                return;
-            }
-            ws = webSocket;
-        });
+        AsyncHttpClient.getDefaultInstance().websocket(
+                Global.getDefault().getLanBoxIp(),
+                null, (ex, webSocket) -> {
+                    if (ex != null) {
+                        ex.printStackTrace();
+                        return;
+                    }
+                    ws = webSocket;
+                });
     }
 
     @Override
