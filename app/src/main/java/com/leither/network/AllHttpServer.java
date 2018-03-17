@@ -2,12 +2,12 @@ package com.leither.network;
 
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
-import com.leither.Task.syncTask.RefreshDetailChatMsgRunner;
-import com.leither.Task.syncTask.ScriptFactory;
-import com.leither.Task.syncTask.SyncTaskRunner;
-import com.leither.Task.asyncTask.Task;
-import com.leither.Task.asyncTask.TaskFactory;
-import com.leither.Task.asyncTask.AsyncTaskRunner;
+import com.leither.Task.RefreshDetailChatMsgRunner;
+import com.leither.Task.ScriptFactory;
+import com.leither.Task.SyncTaskRunner;
+import com.leither.Task.Task;
+import com.leither.Task.TaskFactory;
+import com.leither.Task.AsyncTaskRunner;
 import com.leither.scripts.syncScripts.SyncScript;
 
 public class AllHttpServer implements Server {

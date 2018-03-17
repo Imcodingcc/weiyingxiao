@@ -7,8 +7,6 @@ public class ServerCreator {
     private AsyncHttpServer server = new AsyncHttpServer();
     private static ServerCreator socketCreator = null;
 
-
-
     private ServerCreator(){
         setListener();
     }

@@ -10,7 +10,7 @@ import com.leither.entity.MsgSummary;
 import com.leither.exception.NodeNullException;
 import com.leither.operation.BasicAction;
 import com.leither.common.Global;
-import com.leither.weChatVersion.WeChatResourceId;
+import com.leither.common.WeChatResourceId;
 
 import java.util.ArrayList;
 import java.util.Collections;

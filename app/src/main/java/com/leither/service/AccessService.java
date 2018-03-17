@@ -10,7 +10,7 @@ import android.view.accessibility.AccessibilityEvent;
 import com.leither.network.ServerCreator;
 import com.leither.common.Global;
 import com.leither.common.ShotApplication;
-import com.leither.weChatVersion.WeChatResourceId;
+import com.leither.common.WeChatResourceId;
 
 public class AccessService extends AccessibilityService{
 
@@ -38,7 +38,6 @@ public class AccessService extends AccessibilityService{
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        //Log.d("AccessibilityEvent", String.valueOf(event.getEventType()));
     }
 
     @Override

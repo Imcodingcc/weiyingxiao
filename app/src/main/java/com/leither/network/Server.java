@@ -3,5 +3,5 @@ package com.leither.network;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 
 public interface Server {
-    public void setListener(AsyncHttpServer server);
+    void setListener(AsyncHttpServer server);
 }
