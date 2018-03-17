@@ -9,30 +9,26 @@ import com.leither.common.Global;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AddFriend extends AsyncScript{
+public class AddFriend extends AsyncScript {
     private static final String TAG = AddFriend.class.getName();
     String[] steps = new String[]{"更多功能", "添加朋友"};
-    String[] steps2 = new String []{"搜索", "添加到通讯录"};
+    String[] steps2 = new String[]{"搜索", "添加到通讯录"};
     private Global g = Global.getDefault();
     private String remarks;
     private String tel;
     private String requestFirst;
 
-    public AddFriend(AsyncHttpServerResponse response, String param){
+    public AddFriend(AsyncHttpServerResponse response, String param) throws JSONException {
         super(response);
-        try {
-            Log.d(TAG, "AddFriend: init " + param);
-            JSONObject jsonObject = new JSONObject(param);
-            remarks = jsonObject.getString("remarks");
-            tel = jsonObject.getString("tel");
-            requestFirst = jsonObject.getString("requestFirst");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Log.d(TAG, "AddFriend: init " + param);
+        JSONObject jsonObject = new JSONObject(param);
+        remarks = jsonObject.getString("remarks");
+        tel = jsonObject.getString("tel");
+        requestFirst = jsonObject.getString("requestFirst");
     }
 
     @Override
-    public String start() throws Exception{
+    public String start() throws Exception {
         BasicAction.reOpenWeChat();
         for (String step : steps) {
             BasicAction.Click(step, 0);

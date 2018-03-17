@@ -25,20 +25,22 @@ public class ReceiveInputWebSocketServer implements Server {
                 if (ex != null) Log.e("WebSocket", "Error");
             });
             Global.getDefault().getInputWebSocket().add(webSocket);
-            webSocket.setStringCallback(this::sendMsg);
+            webSocket.setStringCallback(s -> {
+                try {
+                    sendMsg(s);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            });
         });
     }
 
-    private void sendMsg(String s) {
-        try {
-            JSONObject jsonObject = new JSONObject(s);
-            if (jsonObject.getInt("code") == 3) {
-                nexus5.input(jsonObject.getString("msg"));
-            } else {
-                nexus5.sendEvent(s);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+    private void sendMsg(String s) throws JSONException {
+        JSONObject jsonObject = new JSONObject(s);
+        if (jsonObject.getInt("code") == 3) {
+            nexus5.input(jsonObject.getString("msg"));
+        } else {
+            nexus5.sendEvent(s);
         }
     }
 }

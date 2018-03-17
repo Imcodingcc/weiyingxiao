@@ -16,7 +16,7 @@ public class AccessService extends AccessibilityService{
 
     private static final String TAG = AccessService.class.getName();
 
-    void initScripts() throws Exception{
+    void initScripts(){
         ((ShotApplication)getApplication()).setAccessibilityService(this);
         Global.getDefault().setAccessibilityService(this);
         Global.getDefault().setWeChatResourceId(new WeChatResourceId("6.5.23"));
@@ -28,11 +28,7 @@ public class AccessService extends AccessibilityService{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand: ");
-        try {
-            initScripts();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        initScripts();
         return super.onStartCommand(intent, flags, startId);
     }
 

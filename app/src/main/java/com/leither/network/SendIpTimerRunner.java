@@ -14,7 +14,11 @@ public class SendIpTimerRunner {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                sendIp();
+                try {
+                    sendIp();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }, 2 * 60 * 1000);
     }
@@ -51,15 +55,11 @@ public class SendIpTimerRunner {
         return null;
     }
 
-    private void sendIp() {
-        try {
-            AsyncHttpClient.getDefaultInstance()
-                    .execute("http://" + discoverReachablePortIp(discoverIp()) + ":5758"
-                            + "/ipaddr?ip=" + Tools.getLocalHostLANAddress().getHostName()
-                            + "&mac=" + Tools.getWifiMac(ShotApplication.getContext())
-                            + "&model=" + Tools.getDeviceName(), null).get().message();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void sendIp() throws Exception {
+        AsyncHttpClient.getDefaultInstance()
+                .execute("http://" + discoverReachablePortIp(discoverIp()) + ":5758"
+                        + "/ipaddr?ip=" + Tools.getLocalHostLANAddress().getHostName()
+                        + "&mac=" + Tools.getWifiMac(ShotApplication.getContext())
+                        + "&model=" + Tools.getDeviceName(), null).get().message();
     }
 }
