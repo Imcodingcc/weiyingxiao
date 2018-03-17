@@ -1,4 +1,4 @@
-package com.leither.operation;
+package com.leither.common;
 
 import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicAction {
+public class Action {
     @SuppressLint("StaticFieldLeak")
     private static AccessibilityService accessibilityService = Global.getDefault().getAccessibilityService();
     public static void Click(String name, int index) throws Exception{
@@ -129,6 +129,7 @@ public class BasicAction {
         Thread.sleep(2000);
     }
 
+    //TODO back function will be remove to nexus5
     public static void back(int times) throws InterruptedException {
         for (int i = 0; i < times; i++) {
             accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);

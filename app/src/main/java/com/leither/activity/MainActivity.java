@@ -1,6 +1,5 @@
 package com.leither.activity;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -30,11 +29,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
+    }
+
+    private void init(){
         if(!isPermission()) {
             finish();
             return;
         }
-        init();
+        Tools.openAccessibility();
+        getMediaProject();
+        startService();
     }
 
     @Override
@@ -64,12 +69,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void init(){
-        Toast.makeText(this, "请不要操作,直到等待初始化完成", Toast.LENGTH_SHORT).show();
-        getMediaProject();
-        startService();
-    }
-
     private void startService(){
         accessIntent = new Intent(getApplicationContext(), AccessService.class);
         startService(accessIntent);
@@ -95,15 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     boolean isPermission(){
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
-            Toast.makeText(this, "请在android5.0以上的手机运行", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(!Tools.isAccessibilitySettingsOn(this)){
-            Toast.makeText(this, "请先打开辅助功能, 再重启app", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(!Tools.isAppInstalled(this)){
+        if(!Tools.isWeChatInstalled(this)){
             Toast.makeText(this, "请先安装微信APP", Toast.LENGTH_SHORT).show();
             return false;
         }

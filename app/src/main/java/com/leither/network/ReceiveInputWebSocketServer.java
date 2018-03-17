@@ -8,14 +8,11 @@ import com.leither.common.Global;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.leither.touchlibiary.Nexus5;
-
 public class ReceiveInputWebSocketServer implements Server {
-    private Nexus5 nexus5 = new Nexus5();
 
     ReceiveInputWebSocketServer(AsyncHttpServer asyncHttpServer) {
         setListener(asyncHttpServer);
-        nexus5.switchIme();
+        Global.getDefault().getNexus5().switchToAdbIME();
     }
 
     @Override
@@ -38,9 +35,9 @@ public class ReceiveInputWebSocketServer implements Server {
     private void sendMsg(String s) throws JSONException {
         JSONObject jsonObject = new JSONObject(s);
         if (jsonObject.getInt("code") == 3) {
-            nexus5.input(jsonObject.getString("msg"));
+            Global.getDefault().getNexus5().input(jsonObject.getString("msg"));
         } else {
-            nexus5.sendEvent(s);
+            Global.getDefault().getNexus5().sendEvent(s);
         }
     }
 }

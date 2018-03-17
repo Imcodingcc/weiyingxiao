@@ -4,7 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.leither.exception.NodeNullException;
-import com.leither.operation.BasicAction;
+import com.leither.common.Action;
 import com.leither.entity.MsgSummary;
 import com.leither.common.Global;
 import com.leither.common.WeChatResourceId;
@@ -66,7 +66,7 @@ public class RefreshConversations extends AsyncScript {
         List<MsgSummary> list1 = readChatListById();
         if(!Objects.equals(last.get(0).getTitle(), list1.get(0).getTitle())){
             list.addAll(list1);
-            BasicAction.slide(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+            Action.slide(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
             last = list1;
             Thread.sleep(200);
             _getConversationList(list, last);
@@ -82,10 +82,10 @@ public class RefreshConversations extends AsyncScript {
     @Override
     public String start() throws Exception {
         List<MsgSummary> list;
-        BasicAction.reOpenWeChat();
-        BasicAction.DoubleClickById(weChatResourceId.weChat_main_tab, 0);
+        Action.reOpenWeChat();
+        Action.DoubleClickById(weChatResourceId.weChat_main_tab, 0);
         Thread.sleep(500);
-        BasicAction.DoubleClickById(weChatResourceId.weChat_title, 0);
+        Action.DoubleClickById(weChatResourceId.weChat_title, 0);
         Thread.sleep(1000);
         list = getConversationList();
         Map<String, MsgSummary> map = new HashMap<>();

@@ -8,7 +8,7 @@ import com.leither.entity.MsgContent;
 import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgSummary;
 import com.leither.exception.NodeNullException;
-import com.leither.operation.BasicAction;
+import com.leither.common.Action;
 import com.leither.common.Global;
 import com.leither.common.WeChatResourceId;
 
@@ -27,7 +27,7 @@ public class RefreshMsg extends AsyncScript {
     }
 
     private void getConversationContent() throws Exception{
-        BasicAction.DoubleClickById(weChatResourceId.weChat_main_tab, 0);
+        Action.DoubleClickById(weChatResourceId.weChat_main_tab, 0);
         Thread.sleep(1000);
         List<AccessibilityNodeInfo> tabMsgCountAll =
                 accessibilityService
@@ -137,7 +137,7 @@ public class RefreshMsg extends AsyncScript {
                                             texts.get(texts.size() -1).getMsg()));
                 }
                 Thread.sleep(200);
-                BasicAction.back(1);
+                Action.back(1);
                 Thread.sleep(200);
             }
             listView.get(0).performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);

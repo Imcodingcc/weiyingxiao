@@ -15,28 +15,38 @@ import java.util.List;
 import java.util.Map;
 
 import cn.leither.touchlibiary.Nexus5;
-
+//TODO This class will be remove to ShotApplication
+@SuppressLint("StaticFieldLeak")
 public class Global {
-    @SuppressLint("StaticFieldLeak")
+    private String weChatId = "";
+
     private static Global global = null;
 
     private Nexus5 nexus5 = new Nexus5();
 
+    private WeChatResourceId weChatResourceId;
+
+    private ClipboardManager clipboardManager;
+
+    private AccessibilityService accessibilityService;
+
     private Map<String, Integer> xy = new HashMap<>();
+
+    private Map<String, ChatMsg> chatMsgMap =new HashMap<>();
+
+    private Map<String, MsgContent> allConversation = new HashMap<>();
+
+    private Map<String, MsgSummary> ConversationList = new HashMap<>();
+
+    private Map<String, MsgContent> recentConversation = new HashMap<>();
 
     public Map<String, Integer> getXy() {
         return xy;
     }
 
-    public void setXy(Map<String, Integer> xy) {
-        this.xy = xy;
-    }
-
     public Nexus5 getNexus5() {
         return nexus5;
     }
-
-    private String weChatId = "";
 
     private List<WebSocket> inputWebSocket = new ArrayList<>();
 
@@ -44,18 +54,10 @@ public class Global {
         return inputWebSocket;
     }
 
-    public void setInputWebSocket(List<WebSocket> inputWebSocket) {
-        this.inputWebSocket = inputWebSocket;
-    }
-
     private Map<String, String> addOneStatus = new HashMap<>();
 
     public Map<String, String> getAddOneStatus() {
         return addOneStatus;
-    }
-
-    public void setAddOneStatus(Map<String, String> addOneStatus) {
-        this.addOneStatus = addOneStatus;
     }
 
     public Map<String, ChatMsg> getChatMsgMap() {
@@ -66,7 +68,6 @@ public class Global {
         this.chatMsgMap = chatMsgMap;
     }
 
-    private Map<String, ChatMsg> chatMsgMap =new HashMap<>();
 
     public Map<String, MsgSummary> getConversationList() {
         return ConversationList;
@@ -76,8 +77,6 @@ public class Global {
         ConversationList = conversationList;
     }
 
-    private Map<String, MsgSummary> ConversationList = new HashMap<>();
-
     public Map<String, MsgContent> getRecentConversation() {
         return recentConversation;
     }
@@ -86,16 +85,8 @@ public class Global {
         this.recentConversation = recentConversation;
     }
 
-    private Map<String, MsgContent> recentConversation = new HashMap<>();
-
-    private Map<String, MsgContent> allConversation = new HashMap<>();
-
     public Map<String, MsgContent> getAllConversation() {
         return allConversation;
-    }
-
-    public void setAllConversation(Map<String, MsgContent> allConversation) {
-        this.allConversation = allConversation;
     }
 
     public String getWeChatId() {
@@ -121,12 +112,6 @@ public class Global {
     public void setWeChatResourceId(WeChatResourceId weChatResourceId) {
         this.weChatResourceId = weChatResourceId;
     }
-
-    private WeChatResourceId weChatResourceId;
-
-    private AccessibilityService accessibilityService;
-
-    private ClipboardManager clipboardManager;
 
     public ClipboardManager getClipboardManager() {
         return clipboardManager;

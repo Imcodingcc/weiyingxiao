@@ -3,7 +3,7 @@ package com.leither.scripts.asyncScripts;
 import android.util.Log;
 
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
-import com.leither.operation.BasicAction;
+import com.leither.common.Action;
 import com.leither.common.Global;
 
 import org.json.JSONException;
@@ -29,20 +29,20 @@ public class AddFriend extends AsyncScript {
 
     @Override
     public String start() throws Exception {
-        BasicAction.reOpenWeChat();
+        Action.reOpenWeChat();
         for (String step : steps) {
-            BasicAction.Click(step, 0);
+            Action.Click(step, 0);
         }
         Global.getDefault().getAddOneStatus().put(tel, "1");
-        BasicAction.RootClick("微信号/QQ号/手机号");
-        BasicAction.findAndInput(tel, g.getAccessibilityService().getRootInActiveWindow());
+        Action.RootClick("微信号/QQ号/手机号");
+        Action.findAndInput(tel, g.getAccessibilityService().getRootInActiveWindow());
         for (String step : steps2) {
-            BasicAction.Click(step, 0);
+            Action.Click(step, 0);
             Thread.sleep(1000);
         }
-        BasicAction.Click("发送", 1);
+        Action.Click("发送", 1);
         Global.getDefault().getAddOneStatus().put(tel, "2");
-        BasicAction.reOpenWeChat();
+        Action.reOpenWeChat();
         return "0";
     }
 }

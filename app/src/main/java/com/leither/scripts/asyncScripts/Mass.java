@@ -4,7 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.common.Global;
-import com.leither.operation.BasicAction;
+import com.leither.common.Action;
 
 public class Mass extends AsyncScript {
     private String[] step = new String[]{"我", "设置", "通用", "功能", "群发助手", "开始群发", "新建群发", "全选", "下一步"};
@@ -20,13 +20,13 @@ public class Mass extends AsyncScript {
 
     @Override
     public String start() throws Exception{
-        BasicAction.reOpenWeChat();
+        Action.reOpenWeChat();
         for (String s : step) {
-            BasicAction.Click(s, 0);
+            Action.Click(s, 0);
         }
-        BasicAction.findAndInput(text, accessibilityService.getRootInActiveWindow());
+        Action.findAndInput(text, accessibilityService.getRootInActiveWindow());
         for (String s : step2) {
-            BasicAction.Click(s, 0);
+            Action.Click(s, 0);
         }
         return "0";
     }

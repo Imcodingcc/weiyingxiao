@@ -7,7 +7,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgContent;
-import com.leither.operation.BasicAction;
+import com.leither.common.Action;
 import com.leither.common.Global;
 
 import org.json.JSONObject;
@@ -138,23 +138,23 @@ public class SendChatMsg extends AsyncScript {
         JSONObject jsonObject = new JSONObject(param);
         String who = jsonObject.getString("name");
         String msg = jsonObject.getString("msg");
-        BasicAction.reOpenWeChat();
-        BasicAction.Click("搜索", 0);
-        BasicAction.findAndInput(who
+        Action.reOpenWeChat();
+        Action.Click("搜索", 0);
+        Action.findAndInput(who
                         .substring(0
                                 , who.length() - 1),
                 Global.getDefault()
                         .getAccessibilityService()
                         .getRootInActiveWindow());
         Thread.sleep(500);
-        BasicAction.Click(who, 0);
+        Action.Click(who, 0);
         Thread.sleep(500);
         preSend(who);
         Thread.sleep(200);
-        BasicAction.findAndInput(msg, Global.getDefault().getAccessibilityService().getRootInActiveWindow());
-        BasicAction.Click("发送", 0);
+        Action.findAndInput(msg, Global.getDefault().getAccessibilityService().getRootInActiveWindow());
+        Action.Click("发送", 0);
         Thread.sleep(500);
-        BasicAction.back(2);
+        Action.back(2);
         MsgContent msgContent = Global.getDefault().getAllConversation().get(who);
         if(msgContent == null){
             msgContent = new MsgContent();

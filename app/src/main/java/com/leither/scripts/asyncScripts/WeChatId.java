@@ -4,7 +4,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leither.exception.NodeNullException;
-import com.leither.operation.BasicAction;
+import com.leither.common.Action;
 import com.leither.common.Global;
 
 import java.util.HashMap;
@@ -21,9 +21,9 @@ public class WeChatId extends AsyncScript {
 
     @Override
     public String start() throws Exception {
-        BasicAction.reOpenWeChat();
+        Action.reOpenWeChat();
         for (String step : steps) {
-            BasicAction.Click(step, 0);
+            Action.Click(step, 0);
         }
         AccessibilityNodeInfo nodeInfo = Global
                 .getDefault()

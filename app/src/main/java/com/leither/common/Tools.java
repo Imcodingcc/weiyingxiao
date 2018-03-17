@@ -38,32 +38,6 @@ public class Tools {
         return bitmapBytes;
     }
 
-    public static boolean isAccessibilitySettingsOn(Context mContext) {
-        int accessibilityEnabled = 0;
-        final String service = "com.dylan_wang.capturescreen" + "/" + AccessService.class.getCanonicalName();
-        try {
-            accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
-                    android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
-        } catch (Settings.SettingNotFoundException ignored) {
-        }
-        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
-
-        if (accessibilityEnabled == 1) {
-            String settingValue = Settings.Secure.getString(mContext.getApplicationContext().getContentResolver(),
-                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-            if (settingValue != null) {
-                mStringColonSplitter.setString(settingValue);
-                while (mStringColonSplitter.hasNext()) {
-                    String accessibilityService = mStringColonSplitter.next();
-                    if (accessibilityService.equalsIgnoreCase(service)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     public static boolean isRoot() {
         boolean root = false;
         try {
@@ -75,27 +49,17 @@ public class Tools {
         return root;
     }
 
-    public static Integer getWeChatVersion() throws PackageManager.NameNotFoundException {
-        PackageManager manager = Global.getDefault().getAccessibilityService().getPackageManager();
-        PackageInfo info = manager.getPackageInfo("com.tencent.mm", 0);
-        return info.versionCode;
-    }
-
     public static InetAddress getLocalHostLANAddress() throws Exception {
         try {
             InetAddress candidateAddress = null;
-            // 遍历所有的网络接口
             for (Enumeration ifaces = NetworkInterface.getNetworkInterfaces(); ifaces.hasMoreElements(); ) {
                 NetworkInterface iface = (NetworkInterface) ifaces.nextElement();
-                // 在所有的接口下再遍历IP
                 for (Enumeration inetAddrs = iface.getInetAddresses(); inetAddrs.hasMoreElements(); ) {
                     InetAddress inetAddr = (InetAddress) inetAddrs.nextElement();
                     if (!inetAddr.isLoopbackAddress()) {// 排除loopback类型地址
                         if (inetAddr.isSiteLocalAddress()) {
-                            // 如果是site-local地址，就是它了
                             return inetAddr;
                         } else if (candidateAddress == null) {
-                            // site-local类型的地址未被发现，先记录候选地址
                             candidateAddress = inetAddr;
                         }
                     }
@@ -104,7 +68,6 @@ public class Tools {
             if (candidateAddress != null) {
                 return candidateAddress;
             }
-            // 如果没有发现 non-loopback地址.只能用最次选的方案
             return InetAddress.getLocalHost();
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,7 +138,7 @@ public class Tools {
         return phrase.toString();
     }
 
-    public static boolean isAppInstalled(Context context) {
+    public static boolean isWeChatInstalled(Context context) {
         PackageManager pm = context.getPackageManager();
         boolean installed;
         try {
@@ -189,7 +152,7 @@ public class Tools {
 
     public static String getWIFILocalIpAdress(Context mContext) {
 
-        WifiManager wifiManager = (WifiManager)mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         assert wifiManager != null;
         if (!wifiManager.isWifiEnabled()) {
             wifiManager.setWifiEnabled(true);
@@ -198,11 +161,17 @@ public class Tools {
         int ipAddress = wifiInfo.getIpAddress();
         return formatIpAddress(ipAddress);
     }
+
     private static String formatIpAddress(int ipAdress) {
 
-        return (ipAdress & 0xFF ) + "." +
-                ((ipAdress >> 8 ) & 0xFF) + "." +
-                ((ipAdress >> 16 ) & 0xFF) + "." +
-                ( ipAdress >> 24 & 0xFF) ;
+        return (ipAdress & 0xFF) + "." +
+                ((ipAdress >> 8) & 0xFF) + "." +
+                ((ipAdress >> 16) & 0xFF) + "." +
+                (ipAdress >> 24 & 0xFF);
+    }
+
+    public static void openAccessibility() {
+        Global.getDefault().getNexus5().
+                executeCommand("settings put secure enabled_accessibility_services com.leither/com.leither.service.AccessService");
     }
 }
