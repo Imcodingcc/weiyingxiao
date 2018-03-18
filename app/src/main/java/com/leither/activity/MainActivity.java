@@ -20,36 +20,25 @@ import com.leither.service.ScreenshotService;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class MainActivity extends AppCompatActivity {
     private Intent screenIntent = null;
-    private Intent accessIntent= null;
+    private Intent accessIntent = null;
     private int REQUEST_MEDIA_PROJECTION = 1;
     private MediaProjectionManager mMediaProjectionManager;
-    private static final String TAG = MainActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
-    }
-
-    private void init(){
-        if(!isPermission()) {
-            finish();
-            return;
-        }
+        if (!isPermission()) return;
         Tools.openAccessibility();
-        getMediaProject();
-        startService();
+        createMediaProjection();
+        toggleActivityResult();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_MEDIA_PROJECTION && data != null) {
-            ((ShotApplication)getApplication()).setResultCode(resultCode);
-            ((ShotApplication)getApplication()).setIntent(data);
-            ((ShotApplication)getApplication()).setMediaProjectionManager(mMediaProjectionManager);
-            screenIntent = new Intent(getApplicationContext(), ScreenshotService.class);
-            startService(screenIntent);
+            saveMediaToShotApplication(resultCode, data);
+            startService();
         }
     }
 
@@ -64,37 +53,46 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Log.d(TAG, "onDestroy: ");
         stopService();
         super.onDestroy();
     }
 
-    private void startService(){
+    private void startService() {
         accessIntent = new Intent(getApplicationContext(), AccessService.class);
         startService(accessIntent);
-        starScreenshot();
+        screenIntent = new Intent(getApplicationContext(), ScreenshotService.class);
+        startService(screenIntent);
     }
 
-    private void stopService(){
-        if(accessIntent != null){
+    private void saveMediaToShotApplication(int resultCode, Intent data) {
+        ((ShotApplication) getApplication()).setResultCode(resultCode);
+        ((ShotApplication) getApplication()).setIntent(data);
+        ((ShotApplication) getApplication())
+                .setMediaProjectionManager(mMediaProjectionManager);
+    }
+
+    private void toggleActivityResult() {
+        startActivityForResult(mMediaProjectionManager
+                        .createScreenCaptureIntent()
+                , REQUEST_MEDIA_PROJECTION);
+    }
+
+    private void stopService() {
+        if (accessIntent != null) {
             stopService(accessIntent);
         }
-        if(screenIntent != null){
+        if (screenIntent != null) {
             stopService(screenIntent);
         }
     }
 
-    private void getMediaProject(){
-        mMediaProjectionManager =
-                (MediaProjectionManager)getApplication().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+    private void createMediaProjection() {
+        mMediaProjectionManager = (MediaProjectionManager)
+                getApplication().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
     }
 
-    private void starScreenshot(){
-        startActivityForResult(mMediaProjectionManager.createScreenCaptureIntent(), REQUEST_MEDIA_PROJECTION);
-    }
-
-    boolean isPermission(){
-        if(!Tools.isWeChatInstalled(this)){
+    boolean isPermission() {
+        if (!Tools.isWeChatInstalled(this)) {
             Toast.makeText(this, "请先安装微信APP", Toast.LENGTH_SHORT).show();
             return false;
         }

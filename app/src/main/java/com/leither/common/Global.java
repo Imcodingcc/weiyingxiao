@@ -15,7 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 import cn.leither.touchlibiary.Nexus5;
-//TODO This class will be remove to ShotApplication
+
+/*TODO
+This class will be remove to ShotApplication
+collections will have a initialize function and getFunction will not be modify
+* */
 @SuppressLint("StaticFieldLeak")
 public class Global {
     private String weChatId = "";

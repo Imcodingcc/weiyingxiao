@@ -119,7 +119,7 @@ public class Action {
         }
     }
 
-    public static void openWeChat() throws Exception{
+    private static void openWeChat() throws Exception{
         Intent intent = new Intent();
         ComponentName comp = new ComponentName("com.tencent.mm","com.tencent.mm.ui.LauncherUI");
         intent.setComponent(comp);

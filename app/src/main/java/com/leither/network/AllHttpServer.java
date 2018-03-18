@@ -10,8 +10,13 @@ import com.leither.Task.TaskFactory;
 import com.leither.Task.AsyncTaskRunner;
 import com.leither.scripts.syncScripts.SyncScript;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AllHttpServer implements Server {
-    private String[] asyncHttpInterface = new String[]{
+
+    //TODO I want change this const array to interface
+    private final String[] asyncHttpInterface = new String[]{
             "Mass",
             "AddFriend",
             "BatchAdd",
@@ -19,7 +24,7 @@ public class AllHttpServer implements Server {
             "TouchTest",
             "SendChatMsg"};
 
-    private String[] syncAndReturnInterface = new String[]{
+    private final String[] syncHttpInterface = new String[]{
             "GetConversationList",
             "GetWeChatId",
             "GetRecentConversation",
@@ -56,7 +61,7 @@ public class AllHttpServer implements Server {
             });
         }
 
-        for (final String sync : syncAndReturnInterface) {
+        for (final String sync : syncHttpInterface) {
             server.post("/" + sync, (request, response) -> {
                 setHeader(response);
                 String param = request.getBody().toString();

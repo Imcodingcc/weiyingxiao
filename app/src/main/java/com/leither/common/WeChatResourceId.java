@@ -3,6 +3,7 @@ package com.leither.common;
 import android.util.Log;
 
 public class WeChatResourceId {
+    //TODO use polymorphic to reFact
 
     public String version;//微信版本号
     private String weChat = "com.tencent.mm:id/";//公共字符串[不变]
