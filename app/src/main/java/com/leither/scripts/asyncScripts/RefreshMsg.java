@@ -4,13 +4,13 @@ import android.accessibilityservice.AccessibilityService;
 import android.graphics.Rect;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.leither.common.WeChatVersion;
 import com.leither.entity.MsgContent;
 import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgSummary;
 import com.leither.exception.NodeNullException;
 import com.leither.common.Action;
 import com.leither.common.Global;
-import com.leither.common.WeChatResourceId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,23 +20,23 @@ public class RefreshMsg extends AsyncScript {
     private static final String TAG = RefreshMsg.class.getName();
 
     private AccessibilityService accessibilityService = Global.getDefault().getAccessibilityService();
-    private WeChatResourceId weChatResourceId = Global.getDefault().getWeChatResourceId();
+    private WeChatVersion weChatVersion = Global.getDefault().getWeChatVersion();
 
     public RefreshMsg() {
         super(null);
     }
 
     private void getConversationContent() throws Exception{
-        Action.DoubleClickById(weChatResourceId.weChat_main_tab, 0);
+        Action.DoubleClickById(weChatVersion.weChat_main_tab, 0);
         Thread.sleep(1000);
         List<AccessibilityNodeInfo> tabMsgCountAll =
                 accessibilityService
                         .getRootInActiveWindow()
-                        .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_main_tab_msg_count);
+                        .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_main_tab_msg_count);
         List<AccessibilityNodeInfo> listView =
                 accessibilityService
                         .getRootInActiveWindow()
-                        .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_main_list_view);
+                        .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_main_list_view);
         if(listView.size() == 0){
             throw new NodeNullException("list not found");
         }
@@ -44,7 +44,7 @@ public class RefreshMsg extends AsyncScript {
             List<AccessibilityNodeInfo> list =
                     accessibilityService
                             .getRootInActiveWindow()
-                            .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_main_list);
+                            .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_main_list);
             if(list.size() == 0){
                 throw new NodeNullException("list not found");
             }
@@ -52,13 +52,13 @@ public class RefreshMsg extends AsyncScript {
                 List<AccessibilityNodeInfo> tabMsgCount =
                         accessibilityService
                                 .getRootInActiveWindow()
-                                .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_main_tab_msg_count);
+                                .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_main_tab_msg_count);
                 if(tabMsgCount.size() == 0){
                     break;
                 }
                 AccessibilityNodeInfo oneMsg = list.get(i);
                 List<AccessibilityNodeInfo> msgCount = oneMsg.
-                        findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_conversation_msg_count);
+                        findAccessibilityNodeInfosByViewId(weChatVersion.weChat_conversation_msg_count);
                 int readCount;
                 String name;
                 String lastTime;
@@ -67,12 +67,12 @@ public class RefreshMsg extends AsyncScript {
                 }else{
                     readCount = Integer.parseInt(msgCount.get(0).getText().toString());
                     name = oneMsg
-                            .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_conversation_title)
+                            .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_conversation_title)
                             .get(0)
                             .getText()
                             .toString();
                     lastTime = oneMsg
-                            .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_conversation_lastTime)
+                            .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_conversation_lastTime)
                             .get(0)
                             .getText()
                             .toString();
@@ -84,7 +84,7 @@ public class RefreshMsg extends AsyncScript {
                 List<AccessibilityNodeInfo> contents =
                         accessibilityService
                                 .getRootInActiveWindow()
-                                .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_conversation_content);
+                                .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_conversation_content);
                 int count2 = contents.size();
                 if(count2 == 0){
                     throw new NodeNullException("content view not found or msg is null");
@@ -137,14 +137,14 @@ public class RefreshMsg extends AsyncScript {
                                             texts.get(texts.size() -1).getMsg()));
                 }
                 Thread.sleep(200);
-                Action.back(1);
+                Global.getDefault().getNexus5().back(1);
                 Thread.sleep(200);
             }
             listView.get(0).performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
             tabMsgCountAll =
                     accessibilityService
                             .getRootInActiveWindow()
-                            .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_main_tab_msg_count);
+                            .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_main_tab_msg_count);
         }
     }
 

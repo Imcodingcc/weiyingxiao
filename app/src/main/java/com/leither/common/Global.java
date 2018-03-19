@@ -30,8 +30,8 @@ public class Global {
 
     private Nexus5 nexus5 = new Nexus5();
 
-    private WeChatResourceId weChatResourceId;
 
+    private WeChatVersion weChatVersion;
 
     private ClipboardManager clipboardManager;
 
@@ -92,6 +92,15 @@ public class Global {
         ConversationList = conversationList;
     }
 
+    public WeChatVersion getWeChatVersion() {
+        return weChatVersion;
+    }
+
+    public void setWeChatVersion(WeChatVersion weChatVersion) {
+        this.weChatVersion = weChatVersion;
+    }
+
+
     public Map<String, MsgContent> getRecentConversation() {
         return recentConversation;
     }
@@ -118,14 +127,6 @@ public class Global {
 
     public void setAccessibilityService(AccessibilityService accessibilityService) {
         this.accessibilityService = accessibilityService;
-    }
-
-    public WeChatResourceId getWeChatResourceId() {
-        return weChatResourceId;
-    }
-
-    public void setWeChatResourceId(WeChatResourceId weChatResourceId) {
-        this.weChatResourceId = weChatResourceId;
     }
 
     public ClipboardManager getClipboardManager() {

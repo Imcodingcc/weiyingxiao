@@ -25,7 +25,7 @@ public class GetFriendStatus extends AsyncScript {
                 .getRootInActiveWindow()
                 .findAccessibilityNodeInfosByText("联系人").size() != 0;
         Thread.sleep(1000);
-        Action.back(2);
+        Global.getDefault().getNexus5().back(2);
         if(isFriend){
             return "0";
         }

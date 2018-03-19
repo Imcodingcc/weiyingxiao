@@ -3,11 +3,11 @@ package com.leither.scripts.asyncScripts;
 import android.accessibilityservice.AccessibilityService;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.leither.common.WeChatVersion;
 import com.leither.exception.NodeNullException;
 import com.leither.common.Action;
 import com.leither.entity.MsgSummary;
 import com.leither.common.Global;
-import com.leither.common.WeChatResourceId;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class RefreshConversations extends AsyncScript {
 
     private static final String TAG = RefreshConversations.class.getName();
     private AccessibilityService accessibilityService = Global.getDefault().getAccessibilityService();
-    private WeChatResourceId weChatResourceId = Global.getDefault().getWeChatResourceId();
+    private WeChatVersion weChatVersion = Global.getDefault().getWeChatVersion();
 
     public RefreshConversations() {
         super(null);
@@ -32,11 +32,11 @@ public class RefreshConversations extends AsyncScript {
         AccessibilityNodeInfo nodeInfo = accessibilityService
                 .getRootInActiveWindow();
         List<AccessibilityNodeInfo> list1 = nodeInfo
-                .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_conversation_title);
+                .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_conversation_title);
         List<AccessibilityNodeInfo> list2 = nodeInfo
-                .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_conversation_lastTime);
+                .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_conversation_lastTime);
         List<AccessibilityNodeInfo> list3 = nodeInfo
-                .findAccessibilityNodeInfosByViewId(weChatResourceId.weChat_conversation_lastMsg);
+                .findAccessibilityNodeInfosByViewId(weChatVersion.weChat_conversation_lastMsg);
         if(list1.size() == 0 || list2.size() == 0 || list3.size() == 0){
             throw new NodeNullException("conversation not found");
         }
@@ -83,9 +83,9 @@ public class RefreshConversations extends AsyncScript {
     public String start() throws Exception {
         List<MsgSummary> list;
         Action.reOpenWeChat();
-        Action.DoubleClickById(weChatResourceId.weChat_main_tab, 0);
+        Action.DoubleClickById(weChatVersion.weChat_main_tab, 0);
         Thread.sleep(500);
-        Action.DoubleClickById(weChatResourceId.weChat_title, 0);
+        Action.DoubleClickById(weChatVersion.weChat_title, 0);
         Thread.sleep(1000);
         list = getConversationList();
         Map<String, MsgSummary> map = new HashMap<>();

@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.microedition.khronos.opengles.GL;
+
 public class Action {
     @SuppressLint("StaticFieldLeak")
     private static AccessibilityService accessibilityService = Global.getDefault().getAccessibilityService();
@@ -129,16 +131,8 @@ public class Action {
         Thread.sleep(2000);
     }
 
-    //TODO back function will be remove to nexus5
-    public static void back(int times) throws InterruptedException {
-        for (int i = 0; i < times; i++) {
-            accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-            Thread.sleep(500);
-        }
-    }
-
     public static void reOpenWeChat() throws Exception{
-        back(5);
+        Global.getDefault().getNexus5().back(5);
         openWeChat();
     }
 

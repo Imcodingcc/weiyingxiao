@@ -154,7 +154,7 @@ public class SendChatMsg extends AsyncScript {
         Action.findAndInput(msg, Global.getDefault().getAccessibilityService().getRootInActiveWindow());
         Action.Click("发送", 0);
         Thread.sleep(500);
-        Action.back(2);
+        Global.getDefault().getNexus5().back(2);
         MsgContent msgContent = Global.getDefault().getAllConversation().get(who);
         if(msgContent == null){
             msgContent = new MsgContent();
