@@ -16,9 +16,6 @@ public class GetAddOneStatus extends SyncScript{
     @Override
     public String exec() throws Exception{
         String res = Global.getDefault().getAddOneStatus().get(tel);
-        if(res == null){
-            return "0";
-        }
-        return res;
+        return res == null? "0" : res;
     }
 }
