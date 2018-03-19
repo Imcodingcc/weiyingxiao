@@ -10,7 +10,7 @@ import java.util.Map;
 public class GetConversationList extends SyncScript{
 
     public AsyncHttpServerResponse response;
-    public GetConversationList(AsyncHttpServerResponse response){
+    public GetConversationList(AsyncHttpServerResponse response, String forNull){
         super(response);
         this.response = response;
     }

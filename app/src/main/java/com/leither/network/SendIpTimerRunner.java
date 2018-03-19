@@ -58,11 +58,13 @@ class SendIpTimerRunner {
     }
 
     private void sendPhoneInfo() throws Exception {
-        AsyncHttpClient.getDefaultInstance()
-                .execute("http://" + Global.getDefault().getLanBoxIp() + ":5758"
-                        + "/ipaddr?ip=" + Tools.getLocalHostLANAddress().getHostName()
-                        + "&mac=" + Tools.getWifiMac(ShotApplication.getContext())
-                        + "&model=" + Tools.getDeviceName(), null).get().message();
+        if(Global.getDefault().getLanBoxIp() != null){
+            AsyncHttpClient.getDefaultInstance()
+                    .execute("http://" + Global.getDefault().getLanBoxIp() + ":5758"
+                            + "/ipaddr?ip=" + Tools.getLocalHostLANAddress().getHostName()
+                            + "&mac=" + Tools.getWifiMac(ShotApplication.getContext())
+                            + "&model=" + Tools.getDeviceName(), null).get().message();
+        }
     }
 
     private void upIpToGlobal() throws Exception {

@@ -9,7 +9,7 @@ import java.util.Map;
 public class GetScreenXy extends SyncScript{
 
     public AsyncHttpServerResponse response;
-    public GetScreenXy(AsyncHttpServerResponse response){
+    public GetScreenXy(AsyncHttpServerResponse response, String forNull){
         super(response);
         this.response = response;
     }

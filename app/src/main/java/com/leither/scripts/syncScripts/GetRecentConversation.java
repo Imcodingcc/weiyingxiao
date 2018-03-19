@@ -11,7 +11,7 @@ import java.util.Map;
 public class GetRecentConversation extends SyncScript{
 
     public AsyncHttpServerResponse response;
-    public GetRecentConversation(AsyncHttpServerResponse response){
+    public GetRecentConversation(AsyncHttpServerResponse response, String forNull){
         super(response);
         this.response = response;
     }

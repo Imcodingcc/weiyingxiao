@@ -13,6 +13,7 @@ public class ReceiveInputWebSocketServer implements Server {
     ReceiveInputWebSocketServer(AsyncHttpServer asyncHttpServer) {
         setListener(asyncHttpServer);
         Global.getDefault().getNexus5().switchToAdbIME();
+        Global.getDefault().getNexus5() .executeCommand("/data/local/tmp/server &");
     }
 
     @Override

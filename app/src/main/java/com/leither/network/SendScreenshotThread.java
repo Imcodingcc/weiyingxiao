@@ -25,10 +25,7 @@ public class SendScreenshotThread extends Thread{
         while(true) {
             try {
                 if (sendList.poll(10L, TimeUnit.SECONDS) != null) {
-                    byte[] a;
-                    a = dataList.take();
-                    Log.d("socket", "run: " + Arrays.toString(a));
-                    webSocket.send(a);
+                    webSocket.send(dataList.take());
                 } else {
                    webSocket.close();
                 }
