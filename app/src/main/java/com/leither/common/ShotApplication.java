@@ -11,6 +11,7 @@ public class ShotApplication extends Application {
     private int resultCode;
     private Intent intent;
     private MediaProjectionManager mMediaProjectionManager;
+
     @SuppressLint("StaticFieldLeak")
     private static Context context;
 
@@ -19,16 +20,6 @@ public class ShotApplication extends Application {
         super.onCreate();
         ShotApplication.context = getApplicationContext();
     }
-
-    public AccessibilityService getAccessibilityService() {
-        return accessibilityService;
-    }
-
-    public void setAccessibilityService(AccessibilityService accessibilityService) {
-        this.accessibilityService = accessibilityService;
-    }
-
-    private AccessibilityService accessibilityService;
 
     public int getResultCode(){
         return resultCode;

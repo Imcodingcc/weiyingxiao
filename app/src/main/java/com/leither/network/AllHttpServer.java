@@ -26,7 +26,6 @@ public class AllHttpServer implements Server {
 
     private final String[] syncHttpInterface = new String[]{
             "GetConversationList",
-            "GetWeChatId",
             "GetRecentConversation",
             "GetAllConversation",
             "GetOneChatRecord",
@@ -47,7 +46,7 @@ public class AllHttpServer implements Server {
         asyncTaskRunner = new AsyncTaskRunner("asyncTaskRunner");
         syncTaskRunner.start();
         asyncTaskRunner.start();
-        new RefreshDetailChatMsgRunner(asyncTaskRunner).start();
+        //new RefreshDetailChatMsgRunner(asyncTaskRunner).start();
     }
 
     @Override

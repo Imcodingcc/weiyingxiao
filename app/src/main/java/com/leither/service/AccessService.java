@@ -10,14 +10,12 @@ import android.view.accessibility.AccessibilityEvent;
 import com.leither.common.WeChatVersion;
 import com.leither.network.ServerCreator;
 import com.leither.common.Global;
-import com.leither.common.ShotApplication;
 
 public class AccessService extends AccessibilityService{
 
     private static final String TAG = AccessService.class.getName();
 
     void initScripts(){
-        ((ShotApplication)getApplication()).setAccessibilityService(this);
         Global.getDefault().setAccessibilityService(this);
         Global.getDefault().setWeChatVersion(WeChatVersion.getWeChatResourceIds(WeChatVersion.VERSION_6235));
         ClipboardManager clipboardManager = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);

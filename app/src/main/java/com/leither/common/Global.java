@@ -16,20 +16,13 @@ import java.util.Map;
 
 import cn.leither.touchlibiary.Nexus5;
 
-/*TODO
-This class will be remove to ShotApplication
-collections will have a initialize function and getFunction will not be modify
-* */
 @SuppressLint("StaticFieldLeak")
 public class Global {
-    private String weChatId = "";
-
     private static Global global = null;
 
     private String lanBoxIp;
 
     private Nexus5 nexus5 = new Nexus5();
-
 
     private WeChatVersion weChatVersion;
 
@@ -111,14 +104,6 @@ public class Global {
 
     public Map<String, MsgContent> getAllConversation() {
         return allConversation;
-    }
-
-    public String getWeChatId() {
-        return weChatId;
-    }
-
-    public void setWeChatId(String weChatId) {
-        this.weChatId = weChatId;
     }
 
     public AccessibilityService getAccessibilityService() {

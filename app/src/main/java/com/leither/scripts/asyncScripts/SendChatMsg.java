@@ -76,7 +76,7 @@ public class SendChatMsg extends AsyncScript {
                 .getDefault()
                 .getAccessibilityService()
                 .getRootInActiveWindow()
-                .findAccessibilityNodeInfosByViewId(Global.getDefault().getWeChatResourceId().weChat_conversation_content);
+                .findAccessibilityNodeInfosByViewId(Global.getDefault().getWeChatVersion().weChat_conversation_content);
         int screenIndex = -1;
         for (int i = 0;i < node.size();i++) {
             Rect rect = new Rect();
