@@ -20,7 +20,6 @@ public class Mass extends AsyncScript {
 
     @Override
     public String start() throws Exception{
-        Action.reOpenWeChat();
         for (String s : step) {
             Action.Click(s, 0);
         }

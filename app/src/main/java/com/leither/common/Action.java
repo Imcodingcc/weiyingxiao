@@ -136,6 +136,14 @@ public class Action {
         openWeChat();
     }
 
+    public static void backToHome(){
+        try {
+            Global.getDefault().getNexus5().back(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void findByClassName(List<AccessibilityNodeInfo> nodeInfos, AccessibilityNodeInfo rootNode, String className){
         int count = rootNode.getChildCount();
         for(int i = 0; i<count; i++){

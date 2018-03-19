@@ -82,7 +82,6 @@ public class RefreshConversations extends AsyncScript {
     @Override
     public String start() throws Exception {
         List<MsgSummary> list;
-        Action.reOpenWeChat();
         Action.DoubleClickById(weChatVersion.weChat_main_tab, 0);
         Thread.sleep(500);
         Action.DoubleClickById(weChatVersion.weChat_title, 0);

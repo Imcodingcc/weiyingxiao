@@ -138,7 +138,6 @@ public class SendChatMsg extends AsyncScript {
         JSONObject jsonObject = new JSONObject(param);
         String who = jsonObject.getString("name");
         String msg = jsonObject.getString("msg");
-        Action.reOpenWeChat();
         Action.Click("搜索", 0);
         Action.findAndInput(who
                         .substring(0

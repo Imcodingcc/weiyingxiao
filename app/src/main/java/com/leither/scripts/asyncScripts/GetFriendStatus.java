@@ -17,7 +17,6 @@ public class GetFriendStatus extends AsyncScript {
 
     @Override
     public String start() throws Exception {
-        Action.reOpenWeChat();
         Action.Click("搜索", 0);
         Action.findAndInput(tel, service.getRootInActiveWindow());
         Thread.sleep(1000);

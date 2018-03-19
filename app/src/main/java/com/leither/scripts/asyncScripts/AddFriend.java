@@ -29,7 +29,6 @@ public class AddFriend extends AsyncScript {
 
     @Override
     public String start() throws Exception {
-        Action.reOpenWeChat();
         for (String step : steps) {
             Action.Click(step, 0);
         }
@@ -42,7 +41,6 @@ public class AddFriend extends AsyncScript {
         }
         Action.Click("发送", 1);
         Global.getDefault().getAddOneStatus().put(tel, "2");
-        Action.reOpenWeChat();
         return "0";
     }
 }
