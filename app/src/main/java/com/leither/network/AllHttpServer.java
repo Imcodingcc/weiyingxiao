@@ -1,5 +1,7 @@
 package com.leither.network;
 
+import android.util.Log;
+
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.leither.Task.ScriptFactory;
@@ -37,7 +39,7 @@ public class AllHttpServer implements Server {
     }
 
     private void startTaskRunner() {
-        new SendIpTimerRunner();
+        new Thread(SendIpTimerRunner::new).start();
         syncTaskRunner = new SyncTaskRunner();
         asyncTaskRunner = new AsyncTaskRunner("asyncTaskRunner");
         syncTaskRunner.start();

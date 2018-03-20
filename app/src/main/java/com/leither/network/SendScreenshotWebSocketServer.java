@@ -25,11 +25,13 @@ public class SendScreenshotWebSocketServer implements Server{
             sendList.offer(true);
             sendList.offer(true);
             sendMap.put(webSocket.toString(), sendList);
-            new SendScreenshotThread(webSocket, sendList, dataList).start();
-            Log.d("thread", "setListener: " + 1);
+            SendScreenshotThread sendScreenshotThread =
+                    new SendScreenshotThread(webSocket, sendList, dataList);
+            sendScreenshotThread.start();
 
             webSocket.setClosedCallback(ex -> {
                     if (ex != null) Log.e("WebSocket", "Error");
+                    sendScreenshotThread.terminate();
             });
 
             webSocket.setStringCallback(s -> sendMap.get(webSocket.toString()).offer(true));

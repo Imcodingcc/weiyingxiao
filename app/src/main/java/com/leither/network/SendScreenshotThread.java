@@ -13,6 +13,7 @@ public class SendScreenshotThread extends Thread{
     private WebSocket webSocket;
     private BlockingQueue<Boolean> sendList;
     private BlockingQueue<byte[]> dataList;
+    private boolean isRunning = true;
     SendScreenshotThread(WebSocket webSocket, BlockingQueue<Boolean> sendList, BlockingQueue<byte[]> dataList){
         this.webSocket = webSocket;
         this.sendList = sendList;
@@ -22,7 +23,7 @@ public class SendScreenshotThread extends Thread{
     @Override
     public void run() {
         super.run();
-        while(true) {
+        while(isRunning) {
             try {
                 if (sendList.poll(10L, TimeUnit.SECONDS) != null) {
                     webSocket.send(dataList.take());
@@ -33,5 +34,9 @@ public class SendScreenshotThread extends Thread{
                 e.printStackTrace();
             }
         }
+    }
+
+    public void terminate(){
+        isRunning = false;
     }
 }

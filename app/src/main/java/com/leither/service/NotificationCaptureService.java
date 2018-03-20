@@ -6,7 +6,7 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
 import com.leither.common.Tools;
-import com.leither.network.SendIpWebSocket;
+import com.leither.network.SendNotificationWebSocket;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +38,7 @@ public class NotificationCaptureService extends NotificationListenerService {
             .put("model", Tools.getDeviceName())
             .put("title", title)
             .put("text", text);
-            SendIpWebSocket.getDefault().send(jsonObject.toString());
+            SendNotificationWebSocket.getDefault().send(jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

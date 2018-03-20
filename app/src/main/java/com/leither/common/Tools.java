@@ -19,6 +19,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.Enumeration;
 
 public class Tools {
@@ -49,7 +50,7 @@ public class Tools {
         return root;
     }
 
-    public static InetAddress getLocalHostLANAddress() throws Exception {
+    public static InetAddress getLocalHostLANAddress(){
         try {
             InetAddress candidateAddress = null;
             for (Enumeration ifaces = NetworkInterface.getNetworkInterfaces(); ifaces.hasMoreElements(); ) {
@@ -73,30 +74,6 @@ public class Tools {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static boolean isHostReachable(String host, Integer timeOut) {
-        try {
-            return InetAddress.getByName(host).isReachable(timeOut);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public static boolean isHostConnectAble(String host, int port) {
-        Socket socket = new Socket();
-        try {
-            socket.connect(new InetSocketAddress(host, port));
-        } catch (IOException e) {
-            return false;
-        } finally {
-            try {
-                socket.close();
-            } catch (IOException ignored) {
-            }
-        }
-        return true;
     }
 
     public static String getWifiMac(Context ctx) {
@@ -182,9 +159,15 @@ public class Tools {
         Global.getDefault().getNexus5().executeCommand("settings put secure notification_enabled 1");
     }
 
-    public static void closeNotificationListener(){
-        Global.getDefault().getNexus5().
-                executeCommand("settings put secure enabled_notification_listeners com.dylan_wang.capturescreen/com.leither.service.NotificationCaptureService");
-        Global.getDefault().getNexus5().executeCommand("settings put secure notification_enabled 0");
+    public static boolean isReachableByTcp(String host, int port, int timeout) {
+        try {
+            Socket socket = new Socket();
+            SocketAddress socketAddress = new InetSocketAddress(host, port);
+            socket.connect(socketAddress, timeout);
+            socket.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 }

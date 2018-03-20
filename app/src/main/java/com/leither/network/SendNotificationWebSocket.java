@@ -3,29 +3,29 @@ package com.leither.network;
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.WebSocket;
 
-public class SendIpWebSocket {
-    private static SendIpWebSocket sendIpWebSocket;
-    public WebSocket webSocket;
+public class SendNotificationWebSocket {
+    private static SendNotificationWebSocket sendIpWebSocket;
+    private WebSocket webSocket;
 
-    private SendIpWebSocket() {
+    private SendNotificationWebSocket() {
 
     }
 
-    public static SendIpWebSocket getDefault() {
+    public static SendNotificationWebSocket getDefault() {
         if (sendIpWebSocket == null) {
-            sendIpWebSocket = new SendIpWebSocket();
+            sendIpWebSocket = new SendNotificationWebSocket();
         }
         return sendIpWebSocket;
     }
 
-    public void send(String str){
-        if(webSocket != null){
+    public void send(String str) {
+        if (webSocket != null) {
             webSocket.send(str);
         }
     }
 
     void onLanBoxIp(String ip) {
-        AsyncHttpClient.getDefaultInstance().websocket(ip,
+        AsyncHttpClient.getDefaultInstance().websocket("ws://" + ip + ":8010/Message",
                 null, (ex, webSocket) -> {
                     if (ex != null) {
                         ex.printStackTrace();
