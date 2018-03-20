@@ -8,7 +8,6 @@ import com.koushikdutta.async.http.WebSocket;
 import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgContent;
 import com.leither.entity.MsgSummary;
-import com.leither.service.NotificationCaptureService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

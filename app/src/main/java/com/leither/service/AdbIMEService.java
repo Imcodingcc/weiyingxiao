@@ -86,7 +86,7 @@ public class AdbIMEService extends InputMethodService {
 			}
 			
 			if (intent.getAction().equals(IME_EDITORCODE)) {				
-				int code = intent.getIntExtra("code", -1);				
+				int code = intent.getIntExtra("code", -1);
 				if (code != -1) {
 					InputConnection ic = getCurrentInputConnection();
 					if (ic != null)
