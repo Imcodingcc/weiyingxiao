@@ -4,12 +4,7 @@ import android.app.Notification;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.util.Log;
 
-import com.koushikdutta.async.http.AsyncHttpClient;
-import com.koushikdutta.async.http.WebSocket;
-import com.leither.common.Global;
-import com.leither.common.ShotApplication;
 import com.leither.common.Tools;
 import com.leither.network.SendIpWebSocket;
 
