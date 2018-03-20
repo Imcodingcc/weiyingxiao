@@ -8,6 +8,7 @@ import com.koushikdutta.async.http.WebSocket;
 import com.leither.entity.ChatMsg;
 import com.leither.entity.MsgContent;
 import com.leither.entity.MsgSummary;
+import com.leither.service.NotificationCaptureService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +20,6 @@ import cn.leither.touchlibiary.Nexus5;
 @SuppressLint("StaticFieldLeak")
 public class Global {
     private static Global global = null;
-
-    private String lanBoxIp;
 
     private Nexus5 nexus5 = new Nexus5();
 
@@ -39,14 +38,6 @@ public class Global {
     private Map<String, MsgSummary> ConversationList = new HashMap<>();
 
     private Map<String, MsgContent> recentConversation = new HashMap<>();
-
-    public String getLanBoxIp() {
-        return lanBoxIp;
-    }
-
-    public void setLanBoxIp(String lanBoxIp) {
-        this.lanBoxIp = lanBoxIp;
-    }
 
     public Map<String, Integer> getXy() {
         return xy;

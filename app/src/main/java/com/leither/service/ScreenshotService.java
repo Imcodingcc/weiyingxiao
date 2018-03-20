@@ -29,7 +29,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class ScreenshotService extends Service
 {
-
     private static final String TAG = ScreenshotService.class.getName();
     private int windowWidth = 0;
     private int windowHeight = 0;

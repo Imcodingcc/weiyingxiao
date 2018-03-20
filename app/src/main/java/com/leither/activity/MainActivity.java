@@ -1,8 +1,10 @@
 package com.leither.activity;
 
 import android.annotation.TargetApi;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import com.leither.R;
 import com.leither.common.Tools;
 import com.leither.common.ShotApplication;
 import com.leither.service.AccessService;
+import com.leither.service.NotificationCaptureService;
 import com.leither.service.ScreenshotService;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Tools.openAccessibility();
+        Tools.openNotificationListener();
+        toggleNotificationListenerService();
         if (!isPermission()) return;
         createMediaProjection();
         toggleActivityResult();
@@ -97,5 +102,13 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
         return Tools.isRoot();
+    }
+
+    private void toggleNotificationListenerService() {
+        PackageManager pm = getPackageManager();
+        pm.setComponentEnabledSetting(new ComponentName(this, NotificationCaptureService.class),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        pm.setComponentEnabledSetting(new ComponentName(this, NotificationCaptureService.class),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
     }
 }

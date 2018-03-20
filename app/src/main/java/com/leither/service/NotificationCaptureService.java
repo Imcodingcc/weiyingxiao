@@ -1,41 +1,56 @@
 package com.leither.service;
 
-import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.WebSocket;
 import com.leither.common.Global;
 import com.leither.common.ShotApplication;
 import com.leither.common.Tools;
+import com.leither.network.SendIpWebSocket;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Objects;
 
-@SuppressLint({"OverrideAbstract", "Registered"})
 public class NotificationCaptureService extends NotificationListenerService {
-    private static WebSocket ws;
 
-    static {
-        AsyncHttpClient.getDefaultInstance().websocket(
-                Global.getDefault().getLanBoxIp(),
-                null, (ex, webSocket) -> {
-                    if (ex != null) {
-                        ex.printStackTrace();
-                        return;
-                    }
-                    ws = webSocket;
-                });
+    @Override
+    public void onListenerConnected() {
+        super.onListenerConnected();
     }
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
-        if (Objects.equals(sbn.getPackageName(), "com.tencent.mm") && ws != null) {
-            ws.send("{ip: "
-                    + Tools.getWIFILocalIpAdress(ShotApplication.getContext()) + ","
-                    + "mac: " + Tools.getWifiMac(ShotApplication.getContext()) + ","
-                    + "model" + Tools.getDeviceName() + "}");
+        Bundle notification = sbn.getNotification().extras;
+        if (Objects.equals(sbn.getPackageName(), "com.tencent.mm") ) {
+            notifyToClient(notification.getString(Notification.EXTRA_TITLE),
+                    notification.getString(Notification.EXTRA_TEXT));
         }
+    }
+
+    private void notifyToClient(String title, String text){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("ip", Tools.getWIFILocalIpAdress(getApplication()))
+            .put("mac" , Tools.getWifiMac(getApplication()))
+            .put("model", Tools.getDeviceName())
+            .put("title", title)
+            .put("text", text);
+            SendIpWebSocket.getDefault().send(jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onNotificationRemoved(StatusBarNotification sbn) {
+        super.onNotificationRemoved(sbn);
     }
 }

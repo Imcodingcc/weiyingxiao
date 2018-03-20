@@ -175,4 +175,16 @@ public class Tools {
                 executeCommand("settings put secure enabled_accessibility_services com.dylan_wang.capturescreen/com.leither.service.AccessService");
         Global.getDefault().getNexus5().executeCommand("settings put secure accessibility_enabled 1");
     }
+
+    public static void openNotificationListener(){
+        Global.getDefault().getNexus5().
+                executeCommand("settings put secure enabled_notification_listeners com.dylan_wang.capturescreen/com.leither.service.NotificationCaptureService");
+        Global.getDefault().getNexus5().executeCommand("settings put secure notification_enabled 1");
+    }
+
+    public static void closeNotificationListener(){
+        Global.getDefault().getNexus5().
+                executeCommand("settings put secure enabled_notification_listeners com.dylan_wang.capturescreen/com.leither.service.NotificationCaptureService");
+        Global.getDefault().getNexus5().executeCommand("settings put secure notification_enabled 0");
+    }
 }

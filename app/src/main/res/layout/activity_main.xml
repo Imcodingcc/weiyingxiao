@@ -7,18 +7,11 @@
         android:layout_height="wrap_content">
         <TextView
             android:gravity="center"
-            android:textSize="32dp"
+            android:textSize="18sp"
             android:textColor="@color/primary_text_default_material_light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="请在后台运行本软件"/>
-        <TextView
-            android:gravity="center"
-            android:textSize="20dp"
-            android:textColor="@color/primary_text_default_material_light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="确保打开了本软件的辅助功能"/>
+            android:text="杭州复睿网络技术有限责任公司版权所有"/>
 
         <TextView
             android:id="@+id/ipAddress"
