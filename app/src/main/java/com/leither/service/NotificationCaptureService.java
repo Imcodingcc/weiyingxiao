@@ -38,7 +38,7 @@ public class NotificationCaptureService extends NotificationListenerService {
             .put("model", Tools.getDeviceName())
             .put("title", title)
             .put("text", text);
-            SendInfoToServer.getDefault().send(jsonObject.toString());
+            SendInfoToServer.getDefault().execute("message", jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }

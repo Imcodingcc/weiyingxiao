@@ -1,13 +1,8 @@
 package com.leither.network;
 
-import android.net.Uri;
 import android.util.Log;
 
-import com.koushikdutta.async.http.AsyncHttpClient;
-import com.koushikdutta.async.http.AsyncHttpRequest;
-import com.koushikdutta.async.http.body.JSONObjectBody;
 import com.leither.common.Tools;
-import com.leither.common.ShotApplication;
 
 import org.json.JSONObject;
 
@@ -20,20 +15,20 @@ class SendIpTimerRunner {
         Log.d("sendIpTimer", "SendIpTimerRunner: ");
         String ip = discoverLanBoxIp();
         sendIpToNotification(ip);
-        if (ip != null) createSendRunner(ip);
+        createSendRunner();
     }
 
-    private void createSendRunner(final String lanBoxIp) {
+    private void createSendRunner() {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 try {
-                    sendPhoneInfo(lanBoxIp);
+                    sendPhoneInfo();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }, 1000);
+        }, 0, 60 * 1000);
     }
 
 
@@ -56,7 +51,7 @@ class SendIpTimerRunner {
         return null;
     }
 
-    private void sendPhoneInfo(final String lanBoxIp) throws Exception {
+    private void sendPhoneInfo() throws Exception {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("ip", Tools.getLocalHostLANAddress().getHostName())
                 .put("mac", Tools.getWifiMac())
