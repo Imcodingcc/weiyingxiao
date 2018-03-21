@@ -16,8 +16,8 @@ import com.leither.R;
 import com.leither.common.Global;
 
 public class AdbIMEService extends InputMethodService {
+	private String IME_CHARS = "ADB_INPUT_CHARS";
     private String IME_MESSAGE = "ADB_INPUT_TEXT";
-    private String IME_CHARS = "ADB_INPUT_CHARS";
     private String IME_KEYCODE = "ADB_INPUT_CODE";
     private String IME_EDITORCODE = "ADB_EDITOR_CODE";
     private static final String TAG = AdbIMEService.class.getName();
