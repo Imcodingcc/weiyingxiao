@@ -6,6 +6,7 @@ import java.util.concurrent.BlockingQueue;
 public class ServerCreator {
     private AsyncHttpServer server = new AsyncHttpServer();
     private static ServerCreator socketCreator = null;
+    private AllHttpServer httpServer = null;
 
     private ServerCreator(){
         setListener();
@@ -21,7 +22,7 @@ public class ServerCreator {
     }
 
     public void setHttpListener(){
-        new AllHttpServer(server);
+        httpServer = new AllHttpServer(server);
     }
 
     public static ServerCreator getDefault(){
@@ -29,5 +30,9 @@ public class ServerCreator {
             socketCreator = new ServerCreator();
         }
         return socketCreator;
+    }
+
+    public void destroy(){
+        httpServer.destroy();
     }
 }
