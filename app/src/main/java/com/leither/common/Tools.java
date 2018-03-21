@@ -76,8 +76,11 @@ public class Tools {
         return null;
     }
 
-    public static String getWifiMac(Context ctx) {
-        WifiManager wifi = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
+    public static String getWifiMac() {
+        WifiManager wifi = (WifiManager) ShotApplication
+                .getContext()
+                .getApplicationContext()
+                .getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifi.getConnectionInfo();
         String str = info.getMacAddress();
         if (str == null) str = "";

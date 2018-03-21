@@ -11,8 +11,6 @@ import com.leither.common.ShotApplication;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -59,22 +57,16 @@ class SendIpTimerRunner {
     }
 
     private void sendPhoneInfo(final String lanBoxIp) throws Exception {
-        AsyncHttpRequest request =
-                new AsyncHttpRequest(Uri.parse("http://" + lanBoxIp + ":5758/ipaddr"), "POST");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("ip", Tools.getLocalHostLANAddress().getHostName())
-                .put("mac", Tools.getWifiMac(ShotApplication.getContext()))
+                .put("mac", Tools.getWifiMac())
                 .put("model", Tools.getDeviceName());
-        request.setBody(new JSONObjectBody(jsonObject));
-        AsyncHttpClient.getDefaultInstance()
-                .execute(request, (ex, response) -> {
-                    if (ex != null) ex.printStackTrace();
-                });
+        SendInfoToServer.getDefault().execute("ipaddr", jsonObject);
     }
 
     private void sendIpToNotification(String ip) {
         if (ip != null) {
-            SendNotificationWebSocket.getDefault().onLanBoxIp(ip);
+            SendInfoToServer.getDefault().onLanBoxIp(ip);
         }
     }
 }

