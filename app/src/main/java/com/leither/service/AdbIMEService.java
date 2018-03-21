@@ -40,13 +40,20 @@ public class AdbIMEService extends InputMethodService {
     }
 
 	@Override
-	public void onStartInput(EditorInfo attribute, boolean restarting) {
-		super.onStartInput(attribute, restarting);
-		Log.d(TAG, "onStartInput: ");
-        for (WebSocket webSocket : Global.getDefault().getInputWebSocket()) {
-            webSocket.send("inputMethodOn");
-        }
-    }
+	public void onStartInputView(EditorInfo info, boolean restarting) {
+		super.onStartInputView(info, restarting);
+		for (WebSocket webSocket : Global.getDefault().getInputWebSocket()) {
+			webSocket.send("inputMethodOpen");
+		}
+	}
+
+	@Override
+	public void onFinishInputView(boolean finishingInput) {
+		super.onFinishInputView(finishingInput);
+		for (WebSocket webSocket : Global.getDefault().getInputWebSocket()) {
+			webSocket.send("inputMethodClose");
+		}
+	}
 
 	public void onDestroy() {
     	if (mReceiver != null)

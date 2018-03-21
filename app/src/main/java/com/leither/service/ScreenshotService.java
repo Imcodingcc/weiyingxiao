@@ -48,7 +48,7 @@ public class ScreenshotService extends Service
         ServerCreator.getDefault().setWsListener(jpgQueue);
         createSurface();
         setXy();
-        startOnUIThread();
+        startVirtualDisplay();
     }
 
     private void createSurface(){
@@ -91,10 +91,6 @@ public class ScreenshotService extends Service
     public void startVirtualDisplay(){
         createMediaProject();
         createVirtualDisplay();
-    }
-
-    public void startOnUIThread(){
-        startVirtualDisplay();
     }
 
     private void captureAndOffer(Image image){

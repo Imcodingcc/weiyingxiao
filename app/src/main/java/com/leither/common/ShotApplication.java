@@ -1,6 +1,5 @@
 package com.leither.common;
 
-import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
