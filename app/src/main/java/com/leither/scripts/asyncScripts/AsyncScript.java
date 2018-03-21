@@ -4,7 +4,7 @@ import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 
 public abstract class AsyncScript {
 
-    protected AsyncHttpServerResponse response;
+    public AsyncHttpServerResponse response;
     public AsyncScript(AsyncHttpServerResponse response){
         this.response = response;
     }
