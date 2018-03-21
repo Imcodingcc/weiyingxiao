@@ -24,6 +24,12 @@ android {
     }
 
     signingConfigs {
+        release {
+            keyAlias 'release'
+            keyPassword '123456'
+            storeFile file('C:/Users/52453/androidReleaseKey/release.jks')
+            storePassword '123456'
+        }
     }
 
 }

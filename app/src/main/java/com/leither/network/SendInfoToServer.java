@@ -36,5 +36,4 @@ public class SendInfoToServer {
     void onLanBoxIp(String ip) {
         this.ip = ip;
     }
-
 }

@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.leither.R;
+import com.leither.common.Global;
 import com.leither.common.Tools;
 import com.leither.common.ShotApplication;
 import com.leither.service.AccessService;
