@@ -22,11 +22,14 @@ public class FriendCircle extends AsyncScript {
         for (String step : steps) {
             Action.Click(step, 0);
         }
-        Rect rect = new Rect(1, 2, 1, 2);
+        Rect rect = new Rect(948, 99, 1044, 195);
         Global.getDefault().getNexus5().longPress(rect);
-        Action.findAndInput(text, service.getRootInActiveWindow());
         Thread.sleep(1000);
-        Action.Click("发送", 0);
+        Global.getDefault().getNexus5().tap(new Rect(200, 300, 200, 300));
+        Thread.sleep(1000);
+        Global.getDefault().getNexus5().input(text);
+        Thread.sleep(1000);
+        Global.getDefault().getNexus5().longPress(new Rect(876, 102, 1056, 192));
         return "0";
     }
 }
