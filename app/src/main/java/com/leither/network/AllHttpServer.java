@@ -20,6 +20,7 @@ public class AllHttpServer implements Server {
             "BatchAdd",
             "GetFriendStatus",
             "TouchTest",
+            "FriendCircle",
             "SendChatMsg"};
 
     private final String[] syncHttpInterface = new String[]{
