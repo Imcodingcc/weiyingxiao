@@ -45,6 +45,7 @@ public class ScreenshotService extends Service
     public void onCreate()
     {
         super.onCreate();
+        ServerCreator.getDefault().setHttpListener();
         ServerCreator.getDefault().setWsListener(jpgQueue);
         createSurface();
         setXy();

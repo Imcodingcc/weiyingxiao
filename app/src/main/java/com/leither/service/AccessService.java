@@ -20,7 +20,6 @@ public class AccessService extends AccessibilityService{
         Global.getDefault().setWeChatVersion(WeChatVersion.getWeChatResourceIds(WeChatVersion.VERSION_6235));
         ClipboardManager clipboardManager = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         Global.getDefault().setClipboardManager(clipboardManager);
-        ServerCreator.getDefault().setHttpListener();
     }
 
     @Override
